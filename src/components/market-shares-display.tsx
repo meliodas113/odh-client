@@ -30,11 +30,18 @@ export function MarketSharesDisplay({
 
         const userShares = option === 'A' ? sharesBalance.optionAShares : sharesBalance.optionBShares;
         const totalSharesForOption = option === 'A' ? market.totalOptionAShares : market.totalOptionBShares;
-        const totalShares = market.totalOptionAShares + market.totalOptionBShares;
+        const totalLosingShares = option === 'A' ? market.totalOptionBShares : market.totalOptionAShares;
 
-        if (totalShares === BigInt(0)) return BigInt(0);
+        if (totalSharesForOption === BigInt(0)) return BigInt(0);
 
-        return userShares;  // For now, just return shares to stop the loop
+        // Calculate user's proportion of the winning side
+        const userProportion = (userShares * BigInt(1000000)) / totalSharesForOption; // Multiply by 1M for precision
+        
+        // Calculate their share of the losing side's shares
+        const winningsFromLosingShares = (totalLosingShares * userProportion) / BigInt(1000000);
+        
+        // Total winnings is their original shares plus their proportion of losing shares
+        return userShares + winningsFromLosingShares;
     };
 
     useEffect(() => {
@@ -57,14 +64,17 @@ export function MarketSharesDisplay({
     return (
         <div className="flex flex-col gap-2">
             <div className="w-full text-sm text-muted-foreground">
-                Your shares: {market.optionA} - {Math.floor(parseInt(toEther(BigInt(sharesBalance?.optionAShares || "0"))))} , {market.optionB} - {Math.floor(parseInt(toEther(BigInt(sharesBalance?.optionBShares || "0"))))}
+                Your shares: {market.optionA} - {Math.floor(parseInt(toEther(sharesBalance?.optionAShares)))}, {market.optionB} - {Math.floor(parseInt(toEther(sharesBalance?.optionBShares)))}
             </div>
-            {winnings.A > 0 || winnings.B > 0 ? (
-                <div className="flex gap-2">
-                    <Badge variant="secondary">{market.optionA}: {displayWinningsA}</Badge>
-                    <Badge variant="secondary">{market.optionB}: {displayWinningsB}</Badge>
+            {(winnings.A > 0 || winnings.B > 0) && (
+                <div className="flex flex-col gap-1">
+                    <div className="text-xs text-muted-foreground">Winnings:</div>
+                    <div className="flex gap-2">
+                        <Badge variant="secondary">{market.optionA}: {displayWinningsA} shares</Badge>
+                        <Badge variant="secondary">{market.optionB}: {displayWinningsB} shares</Badge>
+                    </div>
                 </div>
-            ) : null}
+            )}
         </div>
     );
 }
