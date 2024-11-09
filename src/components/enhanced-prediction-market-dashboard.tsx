@@ -1,51 +1,91 @@
 'use client'
 
-import { ConnectButton, lightTheme, useReadContract } from 'thirdweb/react'
-import { client } from '@/app/client'
-import { baseSepolia } from 'thirdweb/chains'
-import { MarketCard } from './marketCard'
+import { useReadContract } from 'thirdweb/react'
 import { contract } from '@/constants/contract'
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import { MarketCard } from './marketCard'
+import { Navbar } from './navbar'
+import { MarketCardSkeleton } from './market-card-skeleton'
+import { Footer } from "./footer"
 
 export function EnhancedPredictionMarketDashboard() {
-  const { data: marketCount, isLoading: isLoadingMarketCount } = useReadContract({
-    contract,
-    method: "function marketCount() view returns (uint256)",
-    params: []
-  }); 
+    const { data: marketCount, isLoading: isLoadingMarketCount } = useReadContract({
+        contract,
+        method: "function marketCount() view returns (uint256)",
+        params: []
+    }); 
 
-  return (
-    <div className="container mx-auto p-4">
-      <div className="flex justify-between items-center mb-6">
-        <h1 className="text-2xl font-bold">Prediction Market Dashboard</h1>
-        <ConnectButton 
-          client={client} 
-          theme={lightTheme()}
-          chain={baseSepolia}
-          connectButton={{
-            style: {
-              fontSize: '0.75rem !important',
-              height: '2.5rem !important',
-            },
-            label: 'Sign In',
-          }}
-          detailsButton={{
-            displayBalanceToken: {
-              [baseSepolia.id]: "0x4D9604603527322F44c318FB984ED9b5A9Ce9f71"
-            }
-          }}
-        />
-      </div>
-      {isLoadingMarketCount ? (
-        <div className="flex justify-center items-center">
-          <div className="loader"></div>
+    // Show 6 skeleton cards while loading
+    const skeletonCards = Array.from({ length: 6 }, (_, i) => (
+        <MarketCardSkeleton key={`skeleton-${i}`} />
+    ));
+
+    return (
+        <div className="min-h-screen flex flex-col">
+            <div className="flex-grow container mx-auto p-4">
+                <Navbar />
+                <div className="mb-4">
+                    <img 
+                        src="https://placehold.co/800x300" 
+                        alt="Placeholder Banner" 
+                        className="w-full h-auto rounded-lg" 
+                    />
+                </div>
+                <Tabs defaultValue="active" className="w-full">
+                    <TabsList className="grid w-full grid-cols-3">
+                        <TabsTrigger value="active">Active</TabsTrigger>
+                        <TabsTrigger value="pending">Pending Resolution</TabsTrigger>
+                        <TabsTrigger value="resolved">Resolved</TabsTrigger>
+                    </TabsList>
+                    
+                    {isLoadingMarketCount ? (
+                        <TabsContent value="active" className="mt-6">
+                            <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6">
+                                {skeletonCards}
+                            </div>
+                        </TabsContent>
+                    ) : (
+                        <>
+                            <TabsContent value="active">
+                                <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6">
+                                    {Array.from({ length: Number(marketCount) }, (_, index) => (
+                                        <MarketCard 
+                                            key={index} 
+                                            index={index} 
+                                            filter="active"
+                                        />
+                                    ))}
+                                </div>
+                            </TabsContent>
+                            
+                            <TabsContent value="pending">
+                                <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6">
+                                    {Array.from({ length: Number(marketCount) }, (_, index) => (
+                                        <MarketCard 
+                                            key={index} 
+                                            index={index}
+                                            filter="pending"
+                                        />
+                                    ))}
+                                </div>
+                            </TabsContent>
+                            
+                            <TabsContent value="resolved">
+                                <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6">
+                                    {Array.from({ length: Number(marketCount) }, (_, index) => (
+                                        <MarketCard 
+                                            key={index} 
+                                            index={index}
+                                            filter="resolved"
+                                        />
+                                    ))}
+                                </div>
+                            </TabsContent>
+                        </>
+                    )}
+                </Tabs>
+            </div>
+            <Footer />
         </div>
-      ) : (
-        <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6">
-          {Array.from({ length: Number(marketCount) }, (_, index) => (
-            <MarketCard key={index} index={index} />
-          ))}
-        </div>
-      )}
-    </div>
-  )
+    );
 }
