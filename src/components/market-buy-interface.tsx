@@ -172,6 +172,7 @@ export function MarketBuyInterface({ marketId, market }: MarketBuyInterfaceProps
                             className="flex-1" 
                             onClick={() => handleBuy('A')}
                             aria-label={`Vote ${market.optionA} for "${market.question}"`}
+                            disabled={!account}
                         >
                             {market.optionA}
                         </Button>
@@ -179,6 +180,7 @@ export function MarketBuyInterface({ marketId, market }: MarketBuyInterfaceProps
                             className="flex-1"
                             onClick={() => handleBuy('B')}
                             aria-label={`Vote ${market.optionB} for "${market.question}"`}
+                            disabled={!account}
                         >
                             {market.optionB}
                         </Button>
