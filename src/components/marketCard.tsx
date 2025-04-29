@@ -6,12 +6,12 @@ import {
   CardTitle,
 } from "./ui/card";
 import { useAccount, useReadContract } from "wagmi";
-import { MarketProgress } from "./market-progress";
-import { MarketTime } from "./market-time";
+import { MarketProgress } from "./MarketProgress/market-progress";
+import { MarketTime } from "./MarketTime/market-time";
 import { MarketCardSkeleton } from "./market-card-skeleton";
 import { MarketResolved } from "./market-resolved";
 import { MarketPending } from "./market-pending";
-import { MarketBuyInterface } from "./market-buy-interface";
+import { MarketBuyInterface } from "./MarketBuy/market-buy-interface";
 import { MarketSharesDisplay } from "./market-shares-display";
 import Image from "next/image";
 import { CONTRACT_ADDRESS } from "@/constants/contract";
@@ -20,6 +20,7 @@ import { abi } from "./ABI/abi";
 export interface MarketCardProps {
   index: number;
   filter: "active" | "pending" | "resolved";
+  category:string;
 }
 
 // Interface for the market data
@@ -42,7 +43,7 @@ export interface SharesBalance {
   optionBShares: bigint;
 }
 
-export function MarketCard({ index, filter }: MarketCardProps) {
+export function MarketCard({ index, filter,category }: MarketCardProps) {
   const account = useAccount();
 
   const { data: marketData, isLoading: isLoadingMarketData } = useReadContract({
@@ -105,8 +106,9 @@ export function MarketCard({ index, filter }: MarketCardProps) {
     }
   };
 
+  
   // If the market should not be shown, return null
-  if (!shouldShow()) {
+  if (!shouldShow() || (category.toLowerCase()!==market?.category.toLowerCase() && !category.toLowerCase().includes("trending"))) {
     return null;
   }
 
@@ -129,7 +131,7 @@ export function MarketCard({ index, filter }: MarketCardProps) {
                 height={30}
                 width={30}
               />
-              <CardTitle className="text-title-light">
+              <CardTitle className="text-title-light text-md">
                 {market?.question}
               </CardTitle>
             </div>
@@ -158,14 +160,14 @@ export function MarketCard({ index, filter }: MarketCardProps) {
               <MarketBuyInterface marketId={index} market={market!} />
             )}
           </CardContent>
-          <CardFooter>
-            {market && sharesBalance && (
+          {market && sharesBalance && <CardFooter>
+             (
               <MarketSharesDisplay
                 market={market}
                 sharesBalance={sharesBalance}
               />
-            )}
-          </CardFooter>
+            )
+          </CardFooter>}
         </>
       )}
     </Card>

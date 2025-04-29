@@ -1,7 +1,7 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { Badge } from "./ui/badge";
 import { useEffect, useState } from "react";
 import { toFixed } from "@/lib/utils";
-import { parseUnits } from "viem";
 interface MarketSharesDisplayProps {
   market: {
     optionA: string;

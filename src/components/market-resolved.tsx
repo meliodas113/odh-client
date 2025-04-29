@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
+
 import { Button } from "./ui/button";
 import { useAccount, useSendTransaction } from "wagmi";
 import { useState } from "react";
@@ -17,13 +19,14 @@ export function MarketResolved({
   optionB,
 }: MarketResolvedProps) {
   const {address}=useAccount();
-  const handleClaimRewards = async () => {
-    const {
-      writeContract,
-      data,
-      error:contractError
-  }=useWriteContract();
-     const [enableQuery, setEnableQuery] = useState(false);
+  const {
+    writeContract,
+    data,
+    error:contractError
+}=useWriteContract();
+
+const [enableQuery, setEnableQuery] = useState(false);
+  const handleClaimRewards = async () => {  
     try {
       setEnableQuery(true)
       writeContract({
