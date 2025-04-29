@@ -1,5 +1,4 @@
 import { Progress } from "@/components/ui/progress";
-import { toEther } from "thirdweb";
 
 interface MarketProgressProps {
   optionA: string;
@@ -23,7 +22,7 @@ export function MarketProgress({
       <div className="flex justify-between mb-2">
         <span>
           <span className="font-bold text-sm text-palette-text">
-            {optionA}: {Math.floor(parseInt(toEther(totalOptionAShares)))}
+            {optionA}: {Math.floor(Number(totalOptionAShares) / 1e18)}
           </span>
           {totalShares > 0 && (
             <span className="text-xs text-palette-link">
@@ -34,7 +33,7 @@ export function MarketProgress({
         </span>
         <span>
           <span className="font-bold text-sm text-palette-text">
-            {optionB}: {Math.floor(parseInt(toEther(totalOptionBShares)))}
+            {optionB}: {Math.floor(Number(totalOptionBShares) / 1e18)}
           </span>
           {totalShares > 0 && (
             <span className="text-xs text-palette-link">

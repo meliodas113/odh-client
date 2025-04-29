@@ -1,8 +1,8 @@
 import { Button } from "./ui/button";
-import { prepareContractCall } from "thirdweb";
-import { useSendAndConfirmTransaction } from "thirdweb/react";
-import { contract } from "@/constants/contract";
-
+import { useAccount, useSendTransaction } from "wagmi";
+import { useState } from "react";
+import { useWriteContract } from "wagmi";
+import { abi } from "./ABI/abi";
 interface MarketResolvedProps {
   marketId: number;
   outcome: number;
@@ -16,18 +16,29 @@ export function MarketResolved({
   optionA,
   optionB,
 }: MarketResolvedProps) {
-  const { mutateAsync: mutateTransaction } = useSendAndConfirmTransaction();
-
+  const {address}=useAccount();
   const handleClaimRewards = async () => {
+    const {
+      writeContract,
+      data,
+      error:contractError
+  }=useWriteContract();
+     const [enableQuery, setEnableQuery] = useState(false);
     try {
-      const tx = await prepareContractCall({
-        contract,
-        method: "function claimWinnings(uint256 _marketId)",
-        params: [BigInt(marketId)],
-      });
-
-      await mutateTransaction(tx);
+      setEnableQuery(true)
+      writeContract({
+        abi:abi,
+        functionName:"claimWinnigs",
+        address:address as `0x${string}`,
+        args:[
+          BigInt(marketId)
+        ]
+      })
+      console.log(data)
+      setEnableQuery(false)
     } catch (error) {
+      setEnableQuery(false)
+      console.log("the contract error is",contractError)
       console.error(error);
     }
   };

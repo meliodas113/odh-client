@@ -1,22 +1,23 @@
 "use client";
-
-import { useReadContract } from "thirdweb/react";
-import { contract } from "@/constants/contract";
+import { useReadContract } from "wagmi";
+import { abi } from "./ABI/abi";
+import { CONTRACT_ADDRESS } from "@/constants/contract";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { MarketCard } from "./marketCard";
+import { Market } from "./marketCard";
 import { Navbar } from "./navbar";
 import { MarketCardSkeleton } from "./market-card-skeleton";
-import { Footer } from "./footer";
+import Image from "next/image";
 
 export function EnhancedPredictionMarketDashboard() {
-  const { data: marketCount, isLoading: isLoadingMarketCount } =
-    useReadContract({
-      contract,
-      method: "function marketCount() view returns (uint256)",
-      params: [],
-    });
+    const {data:marketCount , isLoading:isLoadingMarketCount} = useReadContract({
+    abi,
+    address: CONTRACT_ADDRESS,
+    functionName: 'marketCount',
+  });
+  const finalData:Market[]=marketCount as Market[];
+  console.log("The market count is",marketCount)
 
-  // Show 6 skeleton cards while loading
   const skeletonCards = Array.from({ length: 6 }, (_, i) => (
     <MarketCardSkeleton key={`skeleton-${i}`} />
   ));
@@ -26,11 +27,7 @@ export function EnhancedPredictionMarketDashboard() {
       <div className="flex-grow container mx-auto p-4">
         <Navbar />
         <div className="mb-4 h-[400px]">
-          <img
-            src="https://i.ibb.co/b9kK9yN/oddshubbg.png"
-            alt="Placeholder Banner"
-            className="w-full h-full object-contain rounded-lg"
-          />
+          <Image src="https://i.ibb.co/b9kK9yN/oddshubbg.png" alt="Placeholder Banner"  height={30} width={30} className="w-full h-full object-contain rounded-lg"/>
         </div>
         <Tabs defaultValue="active" className="w-full">
           <TabsList className="grid w-full grid-cols-3 bg-tab-inactive-bg rounded-lg p-1">
@@ -89,7 +86,6 @@ export function EnhancedPredictionMarketDashboard() {
           )}
         </Tabs>
       </div>
-      <Footer />
     </div>
   );
 }

@@ -14,7 +14,7 @@ export function Footer() {
               rel="noreferrer"
               className="font-medium underline underline-offset-4 text-palette-link"
             >
-              your-name
+              
             </Link>
             . The source code is available on{" "}
             <Link

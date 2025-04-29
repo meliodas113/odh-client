@@ -5,8 +5,7 @@ import {
   CardHeader,
   CardTitle,
 } from "./ui/card";
-import { useActiveAccount, useReadContract } from "thirdweb/react";
-import { contract } from "@/constants/contract";
+import { useAccount, useReadContract } from "wagmi";
 import { MarketProgress } from "./market-progress";
 import { MarketTime } from "./market-time";
 import { MarketCardSkeleton } from "./market-card-skeleton";
@@ -14,18 +13,19 @@ import { MarketResolved } from "./market-resolved";
 import { MarketPending } from "./market-pending";
 import { MarketBuyInterface } from "./market-buy-interface";
 import { MarketSharesDisplay } from "./market-shares-display";
+import Image from "next/image";
+import { CONTRACT_ADDRESS } from "@/constants/contract";
+import { abi } from "./ABI/abi";
 
-// Props for the MarketCard component
-// index is the market id
-// filter is the filter to apply to the market
-interface MarketCardProps {
+export interface MarketCardProps {
   index: number;
   filter: "active" | "pending" | "resolved";
 }
 
 // Interface for the market data
-interface Market {
+export interface Market {
   question: string;
+  imageURI :string;
   optionA: string;
   optionB: string;
   endTime: bigint;
@@ -33,62 +33,63 @@ interface Market {
   totalOptionAShares: bigint;
   totalOptionBShares: bigint;
   resolved: boolean;
+  category:string;
 }
 
 // Interface for the shares balance
-interface SharesBalance {
+export interface SharesBalance {
   optionAShares: bigint;
   optionBShares: bigint;
 }
 
 export function MarketCard({ index, filter }: MarketCardProps) {
-  // Get the active account
-  const account = useActiveAccount();
+  const account = useAccount();
 
-  // Get the market data
   const { data: marketData, isLoading: isLoadingMarketData } = useReadContract({
-    contract,
-    method:
-      "function getMarketInfo(uint256 _marketId) view returns (string question, string optionA, string optionB, uint256 endTime, uint8 outcome, uint256 totalOptionAShares, uint256 totalOptionBShares, bool resolved)",
-    params: [BigInt(index)],
+    abi,
+    address:CONTRACT_ADDRESS,
+    functionName:'getMarketInfo',
+    args:[
+      BigInt(index)
+    ]
   });
-
-  // Parse the market data
+  const finalData: [string, string, string, string, string, bigint, number, bigint, bigint, boolean] = marketData as [string, string, string, string, string, bigint, number, bigint, bigint, boolean];
+  console.log("the market data is",marketData)
   const market: Market | undefined = marketData
     ? {
-        question: marketData[0],
-        optionA: marketData[1],
-        optionB: marketData[2],
-        endTime: marketData[3],
-        outcome: marketData[4],
-        totalOptionAShares: marketData[5],
-        totalOptionBShares: marketData[6],
-        resolved: marketData[7],
+        question: finalData[0] ,
+        imageURI:finalData[1],
+        category:finalData[2],
+        optionA: finalData[3],
+        optionB: finalData[4],
+        endTime: finalData[5],
+        outcome: finalData[6],
+        totalOptionAShares: finalData[7],
+        totalOptionBShares: finalData[8],
+        resolved: finalData[9],
       }
     : undefined;
 
-  // Get the shares balance
   const { data: sharesBalanceData } = useReadContract({
-    contract,
-    method:
-      "function getSharesBalance(uint256 _marketId, address _user) view returns (uint256 optionAShares, uint256 optionBShares)",
-    params: [BigInt(index), account?.address as string],
+    abi,
+    address:CONTRACT_ADDRESS,
+    functionName:'getSharesBalance',
+    args: [
+      BigInt(index),
+       account?.address as string
+      ],
   });
-
-  // Parse the shares balance
+   const sharesData:[bigint, bigint]=sharesBalanceData as [bigint, bigint];
   const sharesBalance: SharesBalance | undefined = sharesBalanceData
     ? {
-        optionAShares: sharesBalanceData[0],
-        optionBShares: sharesBalanceData[1],
+        optionAShares: sharesData[0],
+        optionBShares: sharesData[1],
       }
     : undefined;
 
-  // Check if the market is expired
-  const isExpired = new Date(Number(market?.endTime) * 1000) < new Date();
-  // Check if the market is resolved
-  const isResolved = market?.resolved;
 
-  // Check if the market should be shown
+  const isExpired = new Date(Number(market?.endTime) * 1000) < new Date();
+  const isResolved = market?.resolved;
   const shouldShow = () => {
     if (!market) return false;
 
@@ -121,10 +122,12 @@ export function MarketCard({ index, filter }: MarketCardProps) {
           <CardHeader>
             {market && <MarketTime endTime={market.endTime} />}
             <div className="flex items-center gap-2">
-              <img
-                src="https://unpkg.com/heroicons/24/outline/question-mark-circle.svg"
+              <Image
+                src={market?.imageURI || ""}
                 alt="Market Icon"
                 className="w-6 h-6 text-card-title"
+                height={30}
+                width={30}
               />
               <CardTitle className="text-title-light">
                 {market?.question}
@@ -167,4 +170,7 @@ export function MarketCard({ index, filter }: MarketCardProps) {
       )}
     </Card>
   );
+  return <div>
+    <h1>Hello</h1>
+  </div>
 }

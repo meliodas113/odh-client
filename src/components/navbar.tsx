@@ -1,9 +1,9 @@
-import { ConnectButton, lightTheme } from "thirdweb/react";
-import { client } from "@/app/client";
-import { baseSepolia, moonbeam } from "thirdweb/chains";
-import { inAppWallet } from "thirdweb/wallets";
+import { ConnectKitButton } from "connectkit";
+import { moonbeam } from "viem/chains";
+import { useSwitchChain } from 'wagmi';
 
 export function Navbar() {
+  const {switchChain}=useSwitchChain();
   return (
     <div className="flex justify-between items-center mb-6">
       <h1 className="text-2xl font-bold font-inter">
@@ -11,25 +11,26 @@ export function Navbar() {
         <span className="text-title-light">ddsHub</span>
       </h1>
       <div className="items-center flex gap-2">
-        <ConnectButton
-          client={client}
-          theme={lightTheme()}
-          chain={baseSepolia}
-          chains={[moonbeam, baseSepolia]}
-          connectButton={{
-            style: {
-              color: "#A3BFFA",
-              background: "#0A1A2F",
-              fontSize: "0.75rem !important",
-              height: "2.5rem !important",
-            },
+      <ConnectKitButton.Custom>
+      {({ isConnected, isConnecting, show, hide, address, ensName, chain }) => {
+        return (
+          <button onClick={()=>{
+            if(show) show();
+            if(chain && chain.id! == moonbeam.id){
+              switchChain({
+                chainId : moonbeam.id
+              })
+            }
           }}
-          wallets={[inAppWallet()]}
-          accountAbstraction={{
-            chain: baseSepolia,
-            sponsorGas: true,
-          }}
-        />
+          className={`px-4 py-2 rounded-xl font-medium transition-all duration-200
+            ${isConnected ? "bg-green-600 text-white hover:bg-green-700" : "bg-blue-600 text-white hover:bg-blue-700"}
+            active:scale-95 shadow-md`}
+          >
+            {isConnected ? address : "Connect Wallet"}
+          </button>
+        );
+      }}
+    </ConnectKitButton.Custom>
       </div>
     </div>
   );

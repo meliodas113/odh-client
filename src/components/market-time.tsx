@@ -4,7 +4,6 @@ interface MarketTimeProps {
   endTime: bigint;
   className?: string;
 }
-
 const formatDate = (dateString: string) => {
   return new Date(dateString).toLocaleDateString("en-US", {
     year: "numeric",
@@ -14,10 +13,11 @@ const formatDate = (dateString: string) => {
 };
 
 export function MarketTime({ endTime, className }: MarketTimeProps) {
-  const isEnded = new Date(Number(endTime) * 1000) < new Date();
-  const formattedDate = formatDate(
-    new Date(Number(endTime) * 1000).toISOString()
-  );
+  const timeInMs = Number(endTime) * 1000; // Convert seconds to milliseconds
+  const isEnded = new Date(timeInMs) < new Date();
+  const formattedDate = formatDate(new Date(timeInMs).toISOString());
+
+  console.log("the formatted date is", formattedDate);
 
   return (
     <div
@@ -34,3 +34,4 @@ export function MarketTime({ endTime, className }: MarketTimeProps) {
     </div>
   );
 }
+
