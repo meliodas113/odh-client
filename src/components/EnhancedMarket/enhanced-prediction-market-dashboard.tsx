@@ -6,31 +6,32 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { MarketCard } from "../marketCard";
 import { Navbar } from "../Navbar/navbar";
 import { MarketCardSkeleton } from "../market-card-skeleton";
-import "./styles.css"
+import "./styles.css";
 import { useState } from "react";
 
 export function EnhancedPredictionMarketDashboard() {
   const [selectedCategory, setSelectedCategory] = useState("trending");
-    const {data:marketCount , isLoading:isLoadingMarketCount} = useReadContract({
-    abi,
-    address: CONTRACT_ADDRESS,
-    functionName: 'marketCount',
-  })
-  console.log("The market count is",marketCount)
+  const { data: marketCount, isLoading: isLoadingMarketCount } =
+    useReadContract({
+      abi,
+      address: CONTRACT_ADDRESS,
+      functionName: "marketCount",
+    });
+  console.log("The market count is", marketCount);
 
   const skeletonCards = Array.from({ length: 6 }, (_, i) => (
     <MarketCardSkeleton key={`skeleton-${i}`} />
   ));
 
   const categoryTabs = [
-    { label: "Trending Markets", value: "trending" },
-    { label: "Sports", value: "sports" },
-    { label: "Crypto", value: "crypto" },
-    { label: "Politics", value: "politics" },
-    { label: "Pop Culture", value: "pop" },
+    { label: "🔥 Trending Markets", value: "trending" },
+    { label: "🏀 Sports", value: "sports" },
+    { label: "🪙 Crypto", value: "crypto" },
+    { label: "🗳️ Politics", value: "politics" },
+    { label: "🎬 Pop Culture", value: "pop" },
   ];
   return (
-    <div className="min-h-screen flex flex-col">
+    <div className="min-h-screen min-w-screen flex flex-col">
       <div className="flex-grow container mx-auto p-4">
         <Navbar />
         <div className="CategoryTabs flex gap-2 mb-4">
@@ -81,7 +82,12 @@ export function EnhancedPredictionMarketDashboard() {
               <TabsContent value="active">
                 <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6">
                   {Array.from({ length: Number(marketCount) }, (_, index) => (
-                    <MarketCard key={index} index={index} filter="active" category={selectedCategory}/>
+                    <MarketCard
+                      key={index}
+                      index={index}
+                      filter="active"
+                      category={selectedCategory}
+                    />
                   ))}
                 </div>
               </TabsContent>
@@ -89,7 +95,12 @@ export function EnhancedPredictionMarketDashboard() {
               <TabsContent value="pending">
                 <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6">
                   {Array.from({ length: Number(marketCount) }, (_, index) => (
-                    <MarketCard key={index} index={index} filter="pending"  category={selectedCategory}/>
+                    <MarketCard
+                      key={index}
+                      index={index}
+                      filter="pending"
+                      category={selectedCategory}
+                    />
                   ))}
                 </div>
               </TabsContent>
@@ -97,7 +108,12 @@ export function EnhancedPredictionMarketDashboard() {
               <TabsContent value="resolved">
                 <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6">
                   {Array.from({ length: Number(marketCount) }, (_, index) => (
-                    <MarketCard key={index} index={index} filter="resolved" category={selectedCategory} />
+                    <MarketCard
+                      key={index}
+                      index={index}
+                      filter="resolved"
+                      category={selectedCategory}
+                    />
                   ))}
                 </div>
               </TabsContent>

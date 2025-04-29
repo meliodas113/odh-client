@@ -48,7 +48,6 @@
 //   const [buyingStep, setBuyingStep] = useState<BuyingStep>("initial");
 //   const [isConfirming, setIsConfirming] = useState(false);
 
-
 //   const [error, setError] = useState<string | null>(null);
 
 //   useEffect(() => {
@@ -59,7 +58,6 @@
 //     }
 //   }, [isBuying, buyingStep, isVisible, error]);
 
-
 //   const handleBuy = (option: "A" | "B") => {
 //     setIsVisible(false);
 //     console.log("Trying to buy shares")
@@ -67,7 +65,7 @@
 //       setIsBuying(true);
 //       setSelectedOption(option);
 //       setIsVisible(true);
-//     }, 200); 
+//     }, 200);
 //   };
 
 //   const handleCancel = () => {
@@ -124,7 +122,6 @@
 //     }
 //   };
 
-
 //   return (
 //     <div
 //       className="relative transition-[height] duration-200 ease-in-out overflow-hidden"
@@ -160,7 +157,7 @@
 //             </Button>
 //           </div>
 //         ) : (
-         
+
 //           <div className="flex flex-col mb-4">
 //             { buyingStep === "confirm" ? (
 //               <div className="flex flex-col border-2 border-gray-200 rounded-lg p-4">
@@ -236,7 +233,7 @@
 //                   </div>
 //                 </div>
 //                 <div className="flex justify-between gap-4">
-//                   <Button 
+//                   <Button
 //                   className="flex-1"
 //                   onClick={() => {
 //                     if (amount > 0) {
@@ -267,7 +264,6 @@
 
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { useState, useRef, useEffect } from "react";
-import { useSendTransaction } from "wagmi";
 import { Loader2 } from "lucide-react";
 import { useToast } from "@/components/ui/use-toast";
 import { useWriteContract } from "wagmi";
@@ -294,11 +290,7 @@ export function MarketBuyInterface({
   market,
 }: MarketBuyInterfaceProps) {
   // Blockchain interactions
-  const {
-    writeContract,
-    data,
-    error: contractError
-  } = useWriteContract();
+  const { writeContract, data, error: contractError } = useWriteContract();
   const [enableQuery, setEnableQuery] = useState<boolean>(false);
   const { toast } = useToast();
 
@@ -306,7 +298,6 @@ export function MarketBuyInterface({
   const [isVisible, setIsVisible] = useState(true);
   const [containerHeight, setContainerHeight] = useState("auto");
   const contentRef = useRef<HTMLDivElement>(null);
-
 
   const [selectedOption, setSelectedOption] = useState<Option>(null);
   const [amount, setAmount] = useState(0);
@@ -356,11 +347,8 @@ export function MarketBuyInterface({
         abi: abi,
         functionName: "buyShares",
         address: CONTRACT_ADDRESS,
-        args: [
-          BigInt(marketId),
-          selectedOption === "A",
-        ],
-        value: parseEther(amount.toString())
+        args: [BigInt(marketId), selectedOption === "A"],
+        value: parseEther(amount.toString()),
       });
       setEnableQuery(false);
       toast({
@@ -385,12 +373,10 @@ export function MarketBuyInterface({
   };
 
   return (
-    <div 
-      className="market-container"
-    >
+    <div className="market-container">
       <div
         ref={contentRef}
-        className={`market-content ${isVisible ? 'visible' : 'hidden'}`}
+        className={`market-content ${isVisible ? "visible" : "hidden"}`}
       >
         {!isBuying ? (
           <div className="market-buttons">
@@ -479,20 +465,17 @@ export function MarketBuyInterface({
                       {selectedOption === "A" ? market.optionA : market.optionB}
                     </span>
                   </div>
-                  {error && <div className="error-container">
-                     (
-                      <span className="error-message">{error}</span>
-                    )
-                  </div>}
+                  {error && (
+                    <div className="error-container">
+                      (<span className="error-message">{error}</span>)
+                    </div>
+                  )}
                 </div>
                 <div className="action-buttons">
-                  <button
-                    onClick={handleCancel}
-                    className="cancel-button"
-                  >
+                  <button onClick={handleCancel} className="cancel-button">
                     Cancel
                   </button>
-                  <button 
+                  <button
                     className="proceed-button"
                     onClick={() => {
                       if (amount > 0) {

@@ -16,28 +16,27 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-       <head>
-      <title>OddsHub | Turn Insights into Income</title>
+      <head>
+        <title>OddsHub | Turn Insights into Income</title>
         <meta
-          name='OddsHub'
-          content='On-chain prediction market on the EtherLink ecosystem.'
+          name="OddsHub"
+          content="On-chain prediction market on the EtherLink ecosystem."
         />
         <link rel="icon" href="/assets/logos/oddshublogo.png" />
       </head>
       <body>
-      <NextTopLoader showSpinner={false} color='#2043cf' />
-      <Web3Provider>
-      <main
-          style={{
-          flex: "1",
-          width: "100%",
-          height: "100%",
-          overflowY: "scroll",
-          }}
+        <NextTopLoader showSpinner={false} color="#2043cf" />
+        <Web3Provider>
+          <main
+            style={{
+              flex: "1",
+              width: "100%",
+              height: "100%",
+            }}
           >
-          {children}
-        </main>
-      </Web3Provider>
+            {children}
+          </main>
+        </Web3Provider>
         <Toaster />
       </body>
     </html>
