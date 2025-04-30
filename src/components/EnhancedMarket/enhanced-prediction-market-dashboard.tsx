@@ -9,6 +9,7 @@ import { MarketCardSkeleton } from "../market-card-skeleton";
 import "./styles.css";
 import { useState } from "react";
 import OddsHubCentral from "../CentralComponent";
+import { Footer } from "../footer";
 
 export function EnhancedPredictionMarketDashboard() {
   const [selectedCategory, setSelectedCategory] = useState("trending");
@@ -36,7 +37,7 @@ export function EnhancedPredictionMarketDashboard() {
       <div className="flex-grow container mx-auto p-4">
         <Navbar />
         <div>
-          <OddsHubCentral/>
+          <OddsHubCentral />
         </div>
         <div className="CategoryTabs flex gap-2 mb-4 flex-wrap">
           {categoryTabs.map((tab) => (
@@ -125,6 +126,7 @@ export function EnhancedPredictionMarketDashboard() {
           )}
         </Tabs>
       </div>
+      <Footer />
     </div>
   );
 }
