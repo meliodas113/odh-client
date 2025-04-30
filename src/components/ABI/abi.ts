@@ -192,24 +192,6 @@ export const abi=[
         "type": "uint256"
       },
       {
-        "internalType": "address[]",
-        "name": "_users",
-        "type": "address[]"
-      }
-    ],
-    "name": "batchClaimWinnings",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "uint256",
-        "name": "_marketId",
-        "type": "uint256"
-      },
-      {
         "internalType": "bool",
         "name": "_isOptionA",
         "type": "bool"
