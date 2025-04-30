@@ -1,13 +1,12 @@
 "use client";
 
 import { useRef, useState, useEffect } from "react";
-import Link from "next/link";
 import { motion } from "framer-motion";
 import Image from "next/image";
 import { useMediaQuery } from "@mui/material";
 
 export default function OddsHubCentral() {
-  const [isHovering, setIsHovering] = useState(false);
+  //const [isHovering, setIsHovering] = useState(false);
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
   const containerRef = useRef<HTMLDivElement>(null);
   const mobileDevice = useMediaQuery("(max-width: 600px)");
