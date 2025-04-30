@@ -86,21 +86,19 @@ useEffect(() => {
   const handleClaimRewards = async () => {  
     console.log("Actively claiming the rewards",marketId)
     try {
-      setEnableQuery(true)
+      setEnableQuery(true);
       writeContract({
-        abi:abi,
-        functionName:"claimWinnings",
-        address:CONTRACT_ADDRESS as `0x${string}`,
-        args:[
-          BigInt(marketId)
-        ]
-      })
-      console.log("the contract error is",contractError)
-      console.log(data)
-      setEnableQuery(false)
+        abi: abi,
+        functionName: "claimWinnings",
+        address: CONTRACT_ADDRESS as `0x${string}`,
+        args: [BigInt(marketId)],
+      });
+      console.log("the contract error is", contractError);
+      console.log(data);
+      setEnableQuery(false);
     } catch (error) {
-      setEnableQuery(false)
-      console.log("the contract error is",contractError)
+      setEnableQuery(false);
+      console.log("the contract error is", contractError);
       console.error(error);
     }
   };
