@@ -5,6 +5,7 @@ import { useAccount, useSendTransaction } from "wagmi";
 import { useState } from "react";
 import { useWriteContract } from "wagmi";
 import { abi } from "./ABI/abi";
+import { CONTRACT_ADDRESS } from "@/constants/contract";
 interface MarketResolvedProps {
   marketId: number;
   outcome: number;
@@ -27,16 +28,18 @@ export function MarketResolved({
 
 const [enableQuery, setEnableQuery] = useState(false);
   const handleClaimRewards = async () => {  
+    console.log("Actively claiming the rewards",marketId)
     try {
       setEnableQuery(true)
       writeContract({
         abi:abi,
-        functionName:"claimWinnigs",
-        address:address as `0x${string}`,
+        functionName:"claimWinnings",
+        address:CONTRACT_ADDRESS as `0x${string}`,
         args:[
           BigInt(marketId)
         ]
       })
+      console.log("the contract error is",contractError)
       console.log(data)
       setEnableQuery(false)
     } catch (error) {
@@ -49,7 +52,7 @@ const [enableQuery, setEnableQuery] = useState(false);
   return (
     <div className="flex flex-col gap-2">
       <div className="mb-2 bg-green-200 p-2 rounded-md text-center text-xs">
-        Resolved: {outcome === 0 ? optionA : optionB}
+        Winning Outcome : {outcome === 0 ? optionA : optionB}
       </div>
       <Button
         variant="outline"

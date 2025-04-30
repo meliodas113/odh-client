@@ -8,6 +8,7 @@ import { Navbar } from "../Navbar/navbar";
 import { MarketCardSkeleton } from "../market-card-skeleton";
 import "./styles.css";
 import { useState } from "react";
+import OddsHubCentral from "../CentralComponent";
 
 export function EnhancedPredictionMarketDashboard() {
   const [selectedCategory, setSelectedCategory] = useState("trending");
@@ -34,7 +35,10 @@ export function EnhancedPredictionMarketDashboard() {
     <div className="min-h-screen min-w-screen flex flex-col">
       <div className="flex-grow container mx-auto p-4">
         <Navbar />
-        <div className="CategoryTabs flex gap-2 mb-4">
+        <div>
+          <OddsHubCentral/>
+        </div>
+        <div className="CategoryTabs flex gap-2 mb-4 flex-wrap">
           {categoryTabs.map((tab) => (
             <div
               key={tab.value}
@@ -61,7 +65,7 @@ export function EnhancedPredictionMarketDashboard() {
               value="pending"
               className="font-inter text-sm py-2 px-4 rounded-md data-[state=active]:bg-tab-active-bg data-[state=active]:text-tab-active-text data-[state=inactive]:bg-tab-inactive-bg data-[state=inactive]:text-tab-inactive-text data-[state=inactive]:hover:bg-tab-active-bg/20 data-[state=inactive]:hover:text-tab-active-text"
             >
-              Pending Resolution
+              Pending
             </TabsTrigger>
             <TabsTrigger
               value="resolved"
