@@ -1,5 +1,5 @@
 import { ConnectKitButton } from "connectkit";
-import { moonbeam } from "viem/chains";
+import { etherlink } from "viem/chains";
 import { useSwitchChain } from 'wagmi';
 import "./styles.css";
 
@@ -25,8 +25,8 @@ export function Navbar() {
                 <button 
                   onClick={() => {
                     if (show) show();
-                    if (chain && chain.id !== moonbeam.id) {
-                      switchChain({ chainId: moonbeam.id });
+                    if (chain && chain.id !== etherlink.id) {
+                      switchChain({ chainId: etherlink.id });
                     }
                   }}
                   className={`connect-button ${isConnected ? 'connected' : ''}`}

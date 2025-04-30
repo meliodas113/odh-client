@@ -1,17 +1,17 @@
 'use client'
 import { WagmiProvider, createConfig, http } from "wagmi";
-import {moonbeam} from 'wagmi/chains'
+import {etherlink} from 'wagmi/chains'
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ConnectKitProvider, getDefaultConfig } from "connectkit";
 import { ReactNode } from "react";
 
 export const config = createConfig(
   getDefaultConfig({
-    chains: [moonbeam],
+    chains: [etherlink],
     transports: {
-      [moonbeam.id]:http(
-        //"https://node.mainnet.etherlink.com"
-        "https://rpc.api.moonbeam.network"
+      [etherlink.id]:http(
+        "https://node.mainnet.etherlink.com"
+        // "https://rpc.api.moonbeam.network"
       )
     },
     walletConnectProjectId: "c0d339ed8343fed3a39dd6795c2244b8",
