@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { Clock } from "lucide-react";
+import clsx from "clsx";
 import "./styles.css";
 
 interface MarketTimeProps {
@@ -69,20 +70,34 @@ export function MarketTime({ endTime }: MarketTimeProps) {
 
   return (
     <div
-      className={`market-time ${
-        isActive ? "market-time--active" : "market-time--closed"
-      } ${isUrgent ? "market-time--urgent" : ""}`}
+      className={clsx(
+        "relative flex items-center mb-2 px-3 py-1.5 rounded-full transition-all max-w-fit",
+        isUrgent
+          ? "bg-red-500/20 border border-red-500/30 animate-pulse-border"
+          : isActive
+          ? "bg-blue-500/20 border border-blue-500/30"
+          : "bg-gray-500/20 border border-gray-500/30"
+      )}
     >
-      <div className="market-time__icon">
+      <div
+        className={clsx(
+          "mr-2 flex items-center justify-center",
+          isUrgent ? "text-red-500 animate-pulse-opacity" : "text-white/80"
+        )}
+      >
         <Clock size={16} />
       </div>
 
-      <div className="market-time__content">
-        <span className="market-time__countdown">{timeLeft}</span>
-        <span className="market-time__date">Ends: {formattedEndDate}</span>
+      <div className="flex flex-row items-center gap-1.5">
+        <span className="font-semibold text-sm text-white leading-[1.2]">
+          {timeLeft}
+        </span>
+        <span className="text-xs text-white/70">Ends: {formattedEndDate}</span>
       </div>
 
-      {isUrgent && isActive && <div className="market-time__pulse-ring"></div>}
+      {isUrgent && isActive && (
+        <div className="absolute inset-0 rounded-full pointer-events-none animate-pulse-ring" />
+      )}
     </div>
   );
 }

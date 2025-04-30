@@ -1,53 +1,3 @@
-// import { Progress } from "@/components/ui/progress";
-
-// interface MarketProgressProps {
-//   optionA: string;
-//   optionB: string;
-//   totalOptionAShares: bigint;
-//   totalOptionBShares: bigint;
-// }
-
-// export function MarketProgress({
-//   optionA,
-//   optionB,
-//   totalOptionAShares,
-//   totalOptionBShares,
-// }: MarketProgressProps) {
-//   const totalShares = Number(totalOptionAShares) + Number(totalOptionBShares);
-//   const yesPercentage =
-//     totalShares > 0 ? (Number(totalOptionAShares) / totalShares) * 100 : 50;
-
-//   return (
-//     <div className="mb-4">
-//       <div className="flex justify-between mb-2">
-//         <span>
-//           <span className="font-bold text-sm text-palette-text">
-//             {optionA}: {Math.floor(Number(totalOptionAShares) / 1e18)}
-//           </span>
-//           {totalShares > 0 && (
-//             <span className="text-xs text-palette-link">
-//               {" "}
-//               {Math.floor(yesPercentage)}%
-//             </span>
-//           )}
-//         </span>
-//         <span>
-//           <span className="font-bold text-sm text-palette-text">
-//             {optionB}: {Math.floor(Number(totalOptionBShares) / 1e18)}
-//           </span>
-//           {totalShares > 0 && (
-//             <span className="text-xs text-palette-link">
-//               {" "}
-//               {Math.floor(100 - yesPercentage)}%
-//             </span>
-//           )}
-//         </span>
-//       </div>
-//       <Progress value={yesPercentage} className="h-2" />
-//     </div>
-//   );
-// }
-
 import { useState, useEffect } from "react";
 import "./styles.css";
 
@@ -71,25 +21,27 @@ export function MarketProgress({
   const aShares = Number(totalOptionAShares);
   const bShares = Number(totalOptionBShares);
   const total = aShares + bShares;
-  
+
   // Calculate percentages
   const percentA = total > 0 ? (aShares / total) * 100 : 50;
   const percentB = total > 0 ? (bShares / total) * 100 : 50;
-  
+
   // Animation for progress bars
   useEffect(() => {
     const timer = setTimeout(() => {
       setAnimationComplete(true);
     }, 300);
-    
+
     return () => clearTimeout(timer);
   }, []);
 
   return (
     <div className="market-progress">
       <div className="market-progress__options">
-        <div 
-          className={`market-progress__option market-progress__option--a ${hoveredOption === "A" ? "market-progress__option--hovered" : ""}`}
+        <div
+          className={`market-progress__option market-progress__option--a ${
+            hoveredOption === "A" ? "market-progress__option--hovered" : ""
+          }`}
           onMouseEnter={() => setHoveredOption("A")}
           onMouseLeave={() => setHoveredOption(null)}
         >
@@ -98,9 +50,11 @@ export function MarketProgress({
             {percentA.toFixed(1)}%
           </span>
         </div>
-        
-        <div 
-          className={`market-progress__option market-progress__option--b ${hoveredOption === "B" ? "market-progress__option--hovered" : ""}`}
+
+        <div
+          className={`market-progress__option market-progress__option--b ${
+            hoveredOption === "B" ? "market-progress__option--hovered" : ""
+          }`}
           onMouseEnter={() => setHoveredOption("B")}
           onMouseLeave={() => setHoveredOption(null)}
         >
@@ -110,11 +64,11 @@ export function MarketProgress({
           </span>
         </div>
       </div>
-      
+
       <div className="market-progress__bar-container">
-        <div 
-          className="market-progress__bar market-progress__bar--a" 
-          style={{ 
+        <div
+          className="market-progress__bar market-progress__bar--a"
+          style={{
             width: animationComplete ? `${percentA}%` : "0%",
           }}
         >
@@ -122,9 +76,9 @@ export function MarketProgress({
             <span className="market-progress__bar-label">{optionA}</span>
           )}
         </div>
-        <div 
+        <div
           className="market-progress__bar market-progress__bar--b"
-          style={{ 
+          style={{
             width: animationComplete ? `${percentB}%` : "0%",
           }}
         >
@@ -133,15 +87,19 @@ export function MarketProgress({
           )}
         </div>
       </div>
-      
+
       <div className="market-progress__stats">
         <div className="market-progress__stat">
           <span className="market-progress__stat-label">Option A Shares:</span>
-          <span className="market-progress__stat-value">{(aShares/1e18).toLocaleString()}</span>
+          <span className="market-progress__stat-value">
+            {(aShares / 1e18).toLocaleString()}
+          </span>
         </div>
         <div className="market-progress__stat">
           <span className="market-progress__stat-label">Option B Shares:</span>
-          <span className="market-progress__stat-value">{(bShares/1e18).toLocaleString()}</span>
+          <span className="market-progress__stat-value">
+            {(bShares / 1e18).toLocaleString()}
+          </span>
         </div>
       </div>
     </div>

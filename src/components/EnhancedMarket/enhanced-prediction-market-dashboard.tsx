@@ -1,15 +1,18 @@
 "use client";
+import { useState } from "react";
+import "./styles.css";
+
 import { useReadContract } from "wagmi";
 import { abi } from "../ABI/abi";
 import { CONTRACT_ADDRESS } from "@/constants/contract";
+
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { MarketCard } from "../marketCard";
 import { Navbar } from "../Navbar/navbar";
 import { MarketCardSkeleton } from "../market-card-skeleton";
-import "./styles.css";
-import { useState } from "react";
 import OddsHubCentral from "../CentralComponent";
 import { Footer } from "../footer";
+import { categoryTabs } from "@/constants/config";
 
 export function EnhancedPredictionMarketDashboard() {
   const [selectedCategory, setSelectedCategory] = useState("trending");
@@ -24,13 +27,6 @@ export function EnhancedPredictionMarketDashboard() {
     <MarketCardSkeleton key={`skeleton-${i}`} />
   ));
 
-  const categoryTabs = [
-    { label: "🔥 Trending Markets", value: "trending" },
-    { label: "🏀 Sports", value: "sports" },
-    { label: "🪙 Crypto", value: "crypto" },
-    { label: "🗳️ Politics", value: "politics" },
-    { label: "🎬 Pop Culture", value: "pop" },
-  ];
   return (
     <div className="min-h-screen min-w-screen flex flex-col">
       <div className="flex-grow container mx-auto p-4">
