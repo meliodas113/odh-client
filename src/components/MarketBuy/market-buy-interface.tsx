@@ -58,8 +58,8 @@ export function MarketBuyInterface({
          `,
         duration: 5000,
         style: {
-          backgroundColor: "#1e3a8a",
-          color: "#fff",
+          backgroundColor: "#0F172A",
+          color: "#A3BFFA",
           fontSize: "12px",
         },
       });
@@ -211,8 +211,6 @@ export function MarketBuyInterface({
                           <input
                             id="amount-input"
                             type="number"
-                            min="0"
-                            step="1"
                             placeholder="Enter amount"
                             value={amount || ""}
                             onChange={(e) => {

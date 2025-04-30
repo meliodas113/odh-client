@@ -23,63 +23,27 @@ export function MarketResolved({
   optionA,
   optionB,
 }: MarketResolvedProps) {
-  const {
-  toast  
-  }=useToast();
+  const { toast } = useToast();
 
-  const {
-    writeContract,
-    data,
-    error:contractError
-}=useWriteContract();
-const [enableQuery, setEnableQuery] = useState(false);
-// const { data: claimCheck }=useReadContract({
-//   abi,
-//   address: CONTRACT_ADDRESS,
-//   functionName: "checkHasClaimed",
-// });
-// console.log(claimCheck);
-// const checkClaimRewards:boolean=claimCheck as boolean;
+  const { writeContract, data, error: contractError } = useWriteContract();
+  const [enableQuery, setEnableQuery] = useState(false);
 
-
-// useEffect(()=>{
-//   console.log("Showing the toast",data)
-//   if(data){
-//     const formattedHash = `${data.slice(0, 15)}...${data.slice(-4)}`;
-//     toast({
-//       title: "Purchase Successful!",
-//       description: `You have successfully claimed your Winnings \n
-//       The hash of the transaction is ${formattedHash}
-//        `,
-//       duration: 5000,
-//       style:{
-//        backgroundColor:"#1e3a8a",
-//        color:"#fff",
-//        fontSize:"12px"
-//       },
-//     }
-//     );
-// }
-// },[data]);
-
-  const handleClaimRewards = async () => {  
-    console.log("Actively claiming the rewards",marketId)
+  const handleClaimRewards = async () => {
+    console.log("Actively claiming the rewards", marketId);
     try {
-      setEnableQuery(true)
+      setEnableQuery(true);
       writeContract({
-        abi:abi,
-        functionName:"claimWinnings",
-        address:CONTRACT_ADDRESS as `0x${string}`,
-        args:[
-          BigInt(marketId)
-        ]
-      })
-      console.log("the contract error is",contractError)
-      console.log(data)
-      setEnableQuery(false)
+        abi: abi,
+        functionName: "claimWinnings",
+        address: CONTRACT_ADDRESS as `0x${string}`,
+        args: [BigInt(marketId)],
+      });
+      console.log("the contract error is", contractError);
+      console.log(data);
+      setEnableQuery(false);
     } catch (error) {
-      setEnableQuery(false)
-      console.log("the contract error is",contractError)
+      setEnableQuery(false);
+      console.log("the contract error is", contractError);
       console.error(error);
     }
   };
@@ -92,14 +56,7 @@ const [enableQuery, setEnableQuery] = useState(false);
       <Button
         variant="outline"
         className="w-full bg-card-bg border-title-accent text-tab-active-text hover:bg-title-accent hover:text-card-bg transition-colors"
-      //   onClick={()=>{
-      //     if(!checkClaimRewards){
-      //       handleClaimRewards()
-      //     } 
-      //   }}
-      // >
-      //   {checkClaimRewards ? "Claimed" : "Claim Rewards"}
-      onClick={handleClaimRewards}
+        onClick={handleClaimRewards}
       >
         Claim Rewards
       </Button>
