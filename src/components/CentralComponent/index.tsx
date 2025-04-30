@@ -1,40 +1,40 @@
-"use client"
+"use client";
 
-import { useRef, useState, useEffect } from "react"
-import Link from "next/link"
-import { motion } from "framer-motion"
-import Image from "next/image"
+import { useRef, useState, useEffect } from "react";
+import Link from "next/link";
+import { motion } from "framer-motion";
+import Image from "next/image";
 import { useMediaQuery } from "@mui/material";
 
 export default function OddsHubCentral() {
-  const [isHovering, setIsHovering] = useState(false)
-  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 })
-  const containerRef = useRef<HTMLDivElement>(null)
-  const mobileDevice = useMediaQuery('(max-width: 600px)');
+  const [isHovering, setIsHovering] = useState(false);
+  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
+  const containerRef = useRef<HTMLDivElement>(null);
+  const mobileDevice = useMediaQuery("(max-width: 600px)");
   // Track mouse position for background effect
   useEffect(() => {
     const handleMouseMove = (e: MouseEvent) => {
       if (containerRef.current) {
-        const rect = containerRef.current.getBoundingClientRect()
+        const rect = containerRef.current.getBoundingClientRect();
         setMousePosition({
           x: e.clientX - rect.left,
           y: e.clientY - rect.top,
-        })
+        });
       }
-    }
+    };
 
-    window.addEventListener("mousemove", handleMouseMove)
+    window.addEventListener("mousemove", handleMouseMove);
     return () => {
-      window.removeEventListener("mousemove", handleMouseMove)
-    }
-  }, [])
+      window.removeEventListener("mousemove", handleMouseMove);
+    };
+  }, []);
 
   // Placeholder market images that will float
   const marketImages = [
     {
       id: 1,
-      position: { x: mobileDevice ? 5:15, y: mobileDevice ? 10 : 20 },
-      size: mobileDevice ? 50 :100,
+      position: { x: mobileDevice ? 5 : 15, y: mobileDevice ? 10 : 20 },
+      size: mobileDevice ? 50 : 100,
       image:
         "https://media-hosting.imagekit.io/031dd2689cd34a9d/trumpXTariff.jpg?Expires=1838883324&Key-Pair-Id=K2ZIVPTIP2VGHC&Signature=Ak1pmwVqRe0bYWCUEiCSIRGUkc4eWMcEZ4LZHsZXcj9vK84OiJWqUCE34NOTP~~45o1ZL3KKQzLFF7izjv8hqJeaRetuIbkKEvPRLUkpWGE~QytT6W3v5oFJwYS80sC1bSNcEqDXOKJx0KrTuxok0k86tJXuKb3upURCtUO8MiR3em6bZ3twEt2lMztXnN0RZM55647C30mstD0VT9~~3FAUyzpuQdMhBGsqclAbktGgtbFwfVirKpeq5n-Ze3G6uVZmhTPlmMhBqX1S4th-hOFx7J5sMow8wwiz7vZxk2CGPoKrsPAA6wxGyivHrwRzi~nqA5Y6nAYDSJGSGyLm1Q__",
     },
@@ -48,7 +48,7 @@ export default function OddsHubCentral() {
     {
       id: 3,
       position: { x: 25, y: 70 },
-      size: mobileDevice ? 55 :95,
+      size: mobileDevice ? 55 : 95,
       image:
         "https://media-hosting.imagekit.io/97fd17c3a468439f/Odin_image.webp?Expires=1838881348&Key-Pair-Id=K2ZIVPTIP2VGHC&Signature=GCoroZci0bdKWe6r8rtseIEsZdMK9FbzMZxSqRalPkgcpXPKapL4Lru6G-98JpqP4ImOGefFsiCi8ttj7DjovbnfOOF~C2EG9C~gbB3yerSjjE-ifJ~3Mnoa2bHGw20bA-nZ8vuNxYZ9Vbqws7VWeGus7czLVOlQzlyyoAHQE8P7lIcAgn3NvV7PFOrheb46xeR0kKB9QHW8wLTOUEjAkRuAlrxThROIh49wGIWtTopaITwb230GSEFAs3u7brhg9NfRKjqYRuVlAtByPEPnFdh5Citja4QExtAycMOziou~R8ABxJ0dnG8g8GXBO6orXlzucFvS3J8tYt1eZxGGbg__",
     },
@@ -73,14 +73,17 @@ export default function OddsHubCentral() {
       image:
         "https://media-hosting.imagekit.io/80e1e56fa0c943c7/usdc_new.png?Expires=1839217737&Key-Pair-Id=K2ZIVPTIP2VGHC&Signature=qXvClgWu67vLyWr7aqcLSbieKj5v6I3Vs2-Sq3U1OJJJgb~0tfcbba1E~hbqOfQtdRRJs3s~yGjhFQ59cZCrjJ0SrWCBAL2t~~fZBaBXwrdEU3PuW8o6Il~zGRB~RYmJ54pY6Ok0OmjBA0NjqHlK4ghEvk9PlHTZQBMenhIlS5wn2pcry6XLU2eA8KypE2lQnBOGa2~PsZGsizrLQHXrWk43v5ml10tVUTXJicKzvM5sojgLRUKDYdC03MCxqn1ocKpE4dZ~WvDu8FVA4YSQwoaPY~vumlRPkMIRVnu5luzF0YIYuwUqbNbeeuWu2wZRf59CnCZ573~brIqHvH7neA__",
     },
-  ]
+  ];
 
   // New improved slogan
-  const slogan = "Where Predictions Meet Profits"
-  const sloganChars = slogan.split("")
+  const slogan = "Where Predictions Meet Profits";
+  const sloganChars = slogan.split("");
 
   return (
-    <div className="relative w-full py-12 md:py-20 lg:py-24 bg-[rgb(15,23,42)] overflow-hidden" ref={containerRef}>
+    <div
+      className="relative w-full py-12 md:py-20 lg:py-24 bg-[rgb(15,23,42)] overflow-hidden"
+      ref={containerRef}
+    >
       {/* Interactive background effect */}
       <motion.div
         className="absolute inset-0 opacity-30"
@@ -142,22 +145,22 @@ export default function OddsHubCentral() {
           >
             <motion.div
               className="bg-gradient-to-r from-white-600 to-white-600 p-1 rounded-lg shadow-lg inline-block mb-2"
-              initial={{ opacity: 0, scale: 0.8 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ delay: 0.2, duration: 0.5 }}
-              whileHover={{
-                scale: 1.05,
-                boxShadow: "0 0 25px rgba(59, 130, 246, 0.6)",
-              }}
+              // initial={{ opacity: 0, scale: 0.8 }}
+              // animate={{ opacity: 1, scale: 1 }}
+              // transition={{ delay: 0.2, duration: 0.5 }}
+              // whileHover={{
+              //   scale: 1.05,
+              //   boxShadow: "0 0 25px rgba(59, 130, 246, 0.6)",
+              // }}
             >
               <h2 className="text-xl md:text-2xl font-bold tracking-wide bg-[rgb(15,23,42)] px-6 py-2 rounded-md">
-                <span className="bg-gradient-to-r from-white-400 to-white-300 bg-clip-text text-transparent">
+                <span className="bg-gradient-to-r from-white-400 to-white-300 bg-clip-text text-white">
                   Welcome to OddsHub
                 </span>
               </h2>
             </motion.div>
 
-            <motion.h1
+            {/* <motion.h1
               className="text-5xl font-bold tracking-tighter sm:text-6xl md:text-7xl bg-gradient-to-r from-white to-blue-300 bg-clip-text text-transparent cursor-default"
               onMouseEnter={() => setIsHovering(true)}
               onMouseLeave={() => setIsHovering(false)}
@@ -168,7 +171,10 @@ export default function OddsHubCentral() {
                 odds
                 <motion.span
                   className="absolute -top-6 -right-6 text-blue-400 text-2xl font-light opacity-0"
-                  animate={{ opacity: isHovering ? 1 : 0, y: isHovering ? 0 : 10 }}
+                  animate={{
+                    opacity: isHovering ? 1 : 0,
+                    y: isHovering ? 0 : 10,
+                  }}
                   transition={{ duration: 0.3 }}
                 >
                   predict
@@ -178,13 +184,16 @@ export default function OddsHubCentral() {
                 Hub
                 <motion.span
                   className="absolute -bottom-6 -right-6 text-blue-400 text-2xl font-light opacity-0"
-                  animate={{ opacity: isHovering ? 1 : 0, y: isHovering ? 0 : -10 }}
+                  animate={{
+                    opacity: isHovering ? 1 : 0,
+                    y: isHovering ? 0 : -10,
+                  }}
                   transition={{ duration: 0.3 }}
                 >
                   win
                 </motion.span>
               </span>
-            </motion.h1>
+            </motion.h1> */}
 
             {/* Animated slogan with letter reveal */}
             <div className="mx-auto max-w-[700px] text-gray-300 text-xl md:text-2xl overflow-hidden mt-3">
@@ -222,15 +231,13 @@ export default function OddsHubCentral() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 1.8, duration: 0.5 }}
             className="flex flex-col sm:flex-row gap-4 mt-2"
-          >
-          </motion.div>
+          ></motion.div>
         </div>
       </div>
 
       {/* Enhanced background effects */}
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(30,58,138,0.2),transparent_70%)]"></div>
       <div className="absolute bottom-0 left-0 right-0 h-24 bg-gradient-to-t from-[rgb(15,23,42)] to-transparent"></div>
-
 
       {[...Array(20)].map((_, i) => (
         <motion.div
@@ -252,5 +259,5 @@ export default function OddsHubCentral() {
         />
       ))}
     </div>
-  )
+  );
 }

@@ -20,13 +20,13 @@ import { abi } from "./ABI/abi";
 export interface MarketCardProps {
   index: number;
   filter: "active" | "pending" | "resolved";
-  category:string;
+  category: string;
 }
 
 // Interface for the market data
 export interface Market {
   question: string;
-  imageURI :string;
+  imageURI: string;
   optionA: string;
   optionB: string;
   endTime: bigint;
@@ -34,7 +34,7 @@ export interface Market {
   totalOptionAShares: bigint;
   totalOptionBShares: bigint;
   resolved: boolean;
-  category:string;
+  category: string;
 }
 
 // Interface for the shares balance
@@ -43,24 +43,44 @@ export interface SharesBalance {
   optionBShares: bigint;
 }
 
-export function MarketCard({ index, filter,category }: MarketCardProps) {
+export function MarketCard({ index, filter, category }: MarketCardProps) {
   const account = useAccount();
 
   const { data: marketData, isLoading: isLoadingMarketData } = useReadContract({
     abi,
-    address:CONTRACT_ADDRESS,
-    functionName:'getMarketInfo',
-    args:[
-      BigInt(index)
-    ]
+    address: CONTRACT_ADDRESS,
+    functionName: "getMarketInfo",
+    args: [BigInt(index)],
   });
-  const finalData: [string, string, string, string, string, bigint, number, bigint, bigint, boolean] = marketData as [string, string, string, string, string, bigint, number, bigint, bigint, boolean];
-  console.log("the market data is",marketData)
+  const finalData: [
+    string,
+    string,
+    string,
+    string,
+    string,
+    bigint,
+    number,
+    bigint,
+    bigint,
+    boolean
+  ] = marketData as [
+    string,
+    string,
+    string,
+    string,
+    string,
+    bigint,
+    number,
+    bigint,
+    bigint,
+    boolean
+  ];
+  console.log("the market data is", marketData);
   const market: Market | undefined = marketData
     ? {
-        question: finalData[0] ,
-        imageURI:finalData[1],
-        category:finalData[2],
+        question: finalData[0],
+        imageURI: finalData[1],
+        category: finalData[2],
         optionA: finalData[3],
         optionB: finalData[4],
         endTime: finalData[5],
@@ -73,21 +93,17 @@ export function MarketCard({ index, filter,category }: MarketCardProps) {
 
   const { data: sharesBalanceData } = useReadContract({
     abi,
-    address:CONTRACT_ADDRESS,
-    functionName:'getSharesBalance',
-    args: [
-      BigInt(index),
-       account?.address as string
-      ],
+    address: CONTRACT_ADDRESS,
+    functionName: "getSharesBalance",
+    args: [BigInt(index), account?.address as string],
   });
-   const sharesData:[bigint, bigint]=sharesBalanceData as [bigint, bigint];
+  const sharesData: [bigint, bigint] = sharesBalanceData as [bigint, bigint];
   const sharesBalance: SharesBalance | undefined = sharesBalanceData
     ? {
         optionAShares: sharesData[0],
         optionBShares: sharesData[1],
       }
     : undefined;
-
 
   const isExpired = new Date(Number(market?.endTime) * 1000) < new Date();
   const isResolved = market?.resolved;
@@ -106,9 +122,12 @@ export function MarketCard({ index, filter,category }: MarketCardProps) {
     }
   };
 
-  
   // If the market should not be shown, return null
-  if (!shouldShow() || (category.toLowerCase()!==market?.category.toLowerCase() && !category.toLowerCase().includes("trending"))) {
+  if (
+    !shouldShow() ||
+    (category.toLowerCase() !== market?.category.toLowerCase() &&
+      !category.toLowerCase().includes("trending"))
+  ) {
     return null;
   }
 
@@ -157,22 +176,25 @@ export function MarketCard({ index, filter,category }: MarketCardProps) {
                 <MarketPending />
               )
             ) : (
-              <MarketBuyInterface marketId={index} market={market!} />
+              <MarketBuyInterface
+                question={market?.question as string}
+                marketId={index}
+                market={market!}
+              />
             )}
           </CardContent>
-          {market && sharesBalance && <CardFooter>
-             (
+          {market && sharesBalance && (
+            <CardFooter>
+              (
               <MarketSharesDisplay
                 market={market}
                 sharesBalance={sharesBalance}
               />
-            )
-          </CardFooter>}
+              )
+            </CardFooter>
+          )}
         </>
       )}
     </Card>
   );
-  return <div>
-    <h1>Hello</h1>
-  </div>
 }
