@@ -23,68 +23,53 @@ export function MarketResolved({
   optionA,
   optionB,
 }: MarketResolvedProps) {
-  const {
-  toast  
-  }=useToast();
-  const {address}=useAccount();
-  const {
-    writeContract,
-    data,
-    error:contractError
-}=useWriteContract();
+  const { toast } = useToast();
+  const { address } = useAccount();
+  const { writeContract, data, error: contractError } = useWriteContract();
 
-const [enableQuery, setEnableQuery] = useState(false);
-const { data: claimCheck }=useReadContract({
-  abi,
-  address: CONTRACT_ADDRESS,
-  functionName: "checkHasClaimed",
-  args:[
-    address,
-    BigInt(marketId)
-  ]
-});
-console.log(claimCheck);
-const checkClaimRewards:boolean=claimCheck as boolean;
+  const [enableQuery, setEnableQuery] = useState(false);
+  const { data: claimCheck } = useReadContract({
+    abi,
+    address: CONTRACT_ADDRESS,
+    functionName: "checkHasClaimed",
+    args: [address, BigInt(marketId)],
+  });
+  const checkClaimRewards: boolean = claimCheck as boolean;
 
-
-useEffect(()=>{
-  console.log("Showing the toast",data)
-  if(data){
-    const formattedHash = `${data.slice(0, 15)}...${data.slice(-4)}`;
-    toast({
-      title: "Purchase Successful!",
-      description: `You have successfully claimed your Winnings \n
+  useEffect(() => {
+    if (data) {
+      const formattedHash = `${data.slice(0, 15)}...${data.slice(-4)}`;
+      toast({
+        title: "Purchase Successful!",
+        description: `You have successfully claimed your Winnings \n
       The hash of the transaction is ${formattedHash}
        `,
-      duration: 5000,
-      style:{
-       backgroundColor:"#1e3a8a",
-       color:"#fff",
-       fontSize:"12px"
-      },
+        duration: 5000,
+        style: {
+          backgroundColor: "#0F172A",
+          color: "#A3BFFA",
+          fontSize: "12px",
+        },
+      });
     }
-    );
-}
-},[data]);
+  }, [data]);
 
-useEffect(() => {
-  if (contractError) {
-    console.error("Write contract error:", contractError);
-    toast({
-      title: "Error",
-      description: "Transaction failed. Please try again.",
-      duration: 5000,
-      style:{
-       backgroundColor:"#1e3a8a",
-       color:"#fff",
-       fontSize:"12px"
-      },
-    });
-  }
-}, [contractError]);
+  useEffect(() => {
+    if (contractError) {
+      toast({
+        title: "Error",
+        description: "Transaction failed. Please try again.",
+        duration: 5000,
+        style: {
+          backgroundColor: "#0F172A",
+          color: "#A3BFFA",
+          fontSize: "12px",
+        },
+      });
+    }
+  }, [contractError]);
 
-  const handleClaimRewards = async () => {  
-    console.log("Actively claiming the rewards",marketId)
+  const handleClaimRewards = async () => {
     try {
       setEnableQuery(true);
       writeContract({
@@ -93,13 +78,9 @@ useEffect(() => {
         address: CONTRACT_ADDRESS as `0x${string}`,
         args: [BigInt(marketId)],
       });
-      console.log("the contract error is", contractError);
-      console.log(data);
       setEnableQuery(false);
     } catch (error) {
       setEnableQuery(false);
-      console.log("the contract error is", contractError);
-      console.error(error);
     }
   };
 
@@ -111,13 +92,13 @@ useEffect(() => {
       <Button
         variant="outline"
         className="w-full bg-card-bg border-title-accent text-tab-active-text hover:bg-title-accent hover:text-card-bg transition-colors"
-        onClick={()=>{
-          if(!checkClaimRewards){
-            handleClaimRewards()
-          } 
+        onClick={() => {
+          if (!checkClaimRewards) {
+            handleClaimRewards();
+          }
         }}
       >
-       {checkClaimRewards ? "Claimed" : "Claim Rewards"}
+        {checkClaimRewards ? "Claimed" : "Claim Rewards"}
       </Button>
     </div>
   );

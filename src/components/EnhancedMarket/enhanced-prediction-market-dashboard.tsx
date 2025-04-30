@@ -19,7 +19,6 @@ export function EnhancedPredictionMarketDashboard() {
       address: CONTRACT_ADDRESS,
       functionName: "marketCount",
     });
-  console.log("The market count is", marketCount);
 
   const skeletonCards = Array.from({ length: 6 }, (_, i) => (
     <MarketCardSkeleton key={`skeleton-${i}`} />

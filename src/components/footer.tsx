@@ -14,7 +14,7 @@ export function Footer() {
               rel="noreferrer"
               className="font-medium text-[#60A5FA] hover:text-[#E0F2FE] underline underline-offset-4 transition-colors"
             >
-              your-name
+              @0xOddshub
             </Link>
             . The source code is available on{" "}
             <Link

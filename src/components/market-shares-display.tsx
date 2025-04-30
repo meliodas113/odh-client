@@ -59,16 +59,14 @@ export function MarketSharesDisplay({
     }
   }, [sharesBalance, market.totalOptionAShares, market.totalOptionBShares]);
 
-  const displayWinningsA = toFixed(Number(winnings.A)/1e18, 2);
-  const displayWinningsB = toFixed(Number(winnings.B)/1e18, 2);
-  console.log("the shares are",Number(sharesBalance?.optionBShares)/1e18)
+  const displayWinningsA = toFixed(Number(winnings.A) / 1e18, 2);
+  const displayWinningsB = toFixed(Number(winnings.B) / 1e18, 2);
   return (
     <div className="flex flex-col gap-2">
       <div className="w-full text-sm text-muted-foreground text-palette-text">
         Your shares: {market.optionA} -{" "}
-        {Number(sharesBalance?.optionAShares)/1e18},{" "}
-        {market.optionB} -{" "}
-        {Number(sharesBalance?.optionBShares)/1e18}
+        {Number(sharesBalance?.optionAShares) / 1e18}, {market.optionB} -{" "}
+        {Number(sharesBalance?.optionBShares) / 1e18}
       </div>
       {(winnings.A > 0 || winnings.B > 0) && (
         <div className="flex flex-col gap-1">

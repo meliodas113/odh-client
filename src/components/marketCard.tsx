@@ -75,7 +75,7 @@ export function MarketCard({ index, filter, category }: MarketCardProps) {
     bigint,
     boolean
   ];
-  console.log("the market data is", marketData);
+
   const market: Market | undefined = marketData
     ? {
         question: finalData[0],

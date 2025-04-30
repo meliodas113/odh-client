@@ -46,7 +46,6 @@ export function MarketBuyInterface({
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    console.log("Showing the toast", data);
     if (data) {
       const formattedHash = `${data.slice(0, 15)}...${data.slice(-4)}`;
       toast({
@@ -77,7 +76,6 @@ export function MarketBuyInterface({
 
   const handleBuy = (option: "A" | "B") => {
     setIsVisible(false);
-    console.log("Trying to buy shares");
     setTimeout(() => {
       setIsBuying(true);
       setSelectedOption(option);
@@ -116,7 +114,6 @@ export function MarketBuyInterface({
       setEnableQuery(false);
     } catch (error) {
       setEnableQuery(false);
-      console.error("Purchase error:", error);
       toast({
         title: "Purchase Failed",
         description: "There was an error processing your purchase",
