@@ -25,7 +25,7 @@ function useAddAdmin() {
     }
   };
 
-  return { addAdmin };
+  return { addAdmin, enableQuery, contractError };
 }
 
 export default useAddAdmin;
