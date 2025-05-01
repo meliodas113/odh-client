@@ -42,14 +42,14 @@ export default function OddsHubCentral() {
       position: { x: 85, y: 60 },
       size: mobileDevice ? 55 : 120,
       image:
-        "https://media-hosting.imagekit.io/f11ec650c0bd4fc4/market_icons_tiktok.webp?Expires=1838882082&Key-Pair-Id=K2ZIVPTIP2VGHC&Signature=EqjNkTWirO~dq~eCoxEqtzAt7~~GLuTELCxdG5d91~hOb7WiDtxWqS5TYwRIGV~h78P5aU0iL95M41BvgU~8q295MhUjFNY6Pq48VS5mqmlA0BrBM8XpdV8sEMmxj92dIhYjsjM8fmN5bGuRySNvCuIAUnWQU5O6UZwKrj1Wm-I51~K8Ehb0P1iHU3Y0CLC5d6Z~PrU76FXe8Fhq3VztBG7~3jYCbzCHsrPeq2JzB1xtlWx0kRl-6ULxJ8cymN6m0XfPn7Io6ACcCtO5vaIrJ3uP4lCE6yMOgu1HbqaFda0CJyreawjx7LF4tbfoOO8D2HIsPumC-I6aBMhSdOkMrA__",
+        "https://media-hosting.imagekit.io/ed1bdc27ca594e3c/solana.png?Expires=1840642892&Key-Pair-Id=K2ZIVPTIP2VGHC&Signature=lEX1QCiJ84T-VL3JnFch6My~NPfCLHFTIzpMynZCPf2YYXQR2Ak~aSV2ECQKZLyKe2yNpZa61Se1vIbBPbYHaQ9f7BehIr-e7Hc6JQjY0m2Ocnip~Uw5bF0RXer-qYkvwz9s6TeX5aYUmf0xH7-yUDh2VioR2RT9gIPC6IhjwTcMGdYeG4WaraCZkrLcc-ook73~f0Eve3SgD~ofkXOeOqvOPSnGJQtk~MNRQ66Bcm3T535m-vFXnwN9kJvbEzheUjVe-lOtKFCittdDrG-llmBdtdJhOWf~w8r7QMI58wH07W0Cq0s2GN7~uyS6LRQIrhnhpeKD7ZgWacbFTVP1tA__",
     },
     {
       id: 3,
       position: { x: 25, y: 70 },
       size: mobileDevice ? 55 : 95,
       image:
-        "https://media-hosting.imagekit.io/97fd17c3a468439f/Odin_image.webp?Expires=1838881348&Key-Pair-Id=K2ZIVPTIP2VGHC&Signature=GCoroZci0bdKWe6r8rtseIEsZdMK9FbzMZxSqRalPkgcpXPKapL4Lru6G-98JpqP4ImOGefFsiCi8ttj7DjovbnfOOF~C2EG9C~gbB3yerSjjE-ifJ~3Mnoa2bHGw20bA-nZ8vuNxYZ9Vbqws7VWeGus7czLVOlQzlyyoAHQE8P7lIcAgn3NvV7PFOrheb46xeR0kKB9QHW8wLTOUEjAkRuAlrxThROIh49wGIWtTopaITwb230GSEFAs3u7brhg9NfRKjqYRuVlAtByPEPnFdh5Citja4QExtAycMOziou~R8ABxJ0dnG8g8GXBO6orXlzucFvS3J8tYt1eZxGGbg__",
+        "https://media-hosting.imagekit.io/169675aaf79c4256/rvsu.png?Expires=1840643195&Key-Pair-Id=K2ZIVPTIP2VGHC&Signature=NroFU8NFtrI77TNJXn9H64vKTuyzKrQr4eNQiRljfy-zSv53QpiWG96bUQWIAxkvN-FQEDgWYjbsN0Q15T4QfSTvflK0a96Ueqej4gmIy54Ax-QWt~Ou3QfNSflQJNhLhnLsSCKe8AMSTiaXSuIAXl1dxN6I~F2jJY9IAN2ksmIKTW8M4lqWhZ48vVYcfhb9Bu2UjCPKZ0xW3vdb~MpY~7Q6AVXL1wEEiT0PLMWfI7aszsaS6r8jbmgIaabKrw3UtGBdNQ6sfYwMdLp4fVMWm3fMweFQ~vgDX~RZXNsjkGvnRUPZizU9bWOQpat-gf1Z23Ti65INgZDggXK1lsMxuQ__",
     },
     {
       id: 4,
