@@ -6,38 +6,10 @@ import { useState } from "react";
 interface props{
     marketId:number;
     winning_outcome:number;
-    categoryId:number;
 }
 
 function useSettleMarket() {
-  const [enableQuery, setEnableQuery] = useState(false);
-  // const handleToast = (
-  //   message: string,
-  //   subHeading: string,
-  //   type: string,
-  //   hash?: string
-  // ) => {
-  //   enqueueSnackbar(message, {
-  //     //@ts-ignore
-  //     variant: "custom",
-  //     subHeading: subHeading,
-  //     hash: hash,
-  //     type: type,
-  //     anchorOrigin: {
-  //       vertical: "top",
-  //       horizontal: "right",
-  //     },
-  //   });
-  // };
-  // const handleToastRef = useRef<
-  //     (
-  //       heading: string,
-  //       subHeading: string,
-  //       type: string,
-  //       hash?: string | undefined,
-  //       chainId?: number | undefined
-  //     ) => void
-  //   >(handleToast);
+  const [enableQuery, setEnableQuery] = useState(false); 
   const {
     writeContract,
     data,
@@ -46,7 +18,7 @@ function useSettleMarket() {
 
 console.log(contractError,enableQuery)
 
-  const settleMarket = async ({}:props) => {
+  const settleMarket = async ({marketId, winning_outcome}:props) => {
     try{
       setEnableQuery(true)
       writeContract({
@@ -54,8 +26,8 @@ console.log(contractError,enableQuery)
         address:CONTRACT_ADDRESS,
         functionName:"resolveMarket",
         args:[
-          1,
-          2
+          BigInt(marketId),
+          BigInt(winning_outcome)
         ]
       })
       

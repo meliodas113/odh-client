@@ -10,13 +10,11 @@ const SettleMarkets = () => {
   const { settleMarket } = useSettleMarket();
 
   const handleSettleMarket = () => {
-    const outcomeValue = outcome === "Yes" ? 0 : 1;
-    const categoryId = 2;
+    const outcomeValue = outcome === "Yes" ? 1 : 2;
     
     settleMarket({
       marketId: marketId,
       winning_outcome: outcomeValue,
-      categoryId: categoryId
     });
   };
 
