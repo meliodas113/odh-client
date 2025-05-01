@@ -9,6 +9,7 @@ import useCreateMarket from "@/hooks/useCreateMarket";
 import { useAccount } from "wagmi";
 import SettleMarkets from "@/components/Settlemarket";
 import { AddAdmin } from "@/components/AddAdmin";
+import { UpdateFeesComp } from "@/components/UpdateFees";
 
 
 const categories = [
@@ -111,6 +112,12 @@ export default function AdminPortal() {
           onClick={() => setAction(2)}
         >
          Add Admin
+        </button>
+        <button 
+          className={`py-2 px-6 rounded-lg font-medium ${action === 2 ? 'bg-blue-600 text-white' : 'bg-gray-200 text-gray-700 hover:bg-gray-300'}`} 
+          onClick={() => setAction(3)}
+        >
+        Update Fees
         </button>
       </div>
       {action == 1 && (
@@ -234,6 +241,18 @@ export default function AdminPortal() {
             </div>
             <div className="bg-white rounded-lg shadow-md p-6">
               <AddAdmin/>
+            </div>
+          </>
+        )
+      }
+      {
+      action == 3 && (
+          <>
+            <div className="flex items-center justify-between mb-6 border-b border-gray-300 pb-4">
+              <div className="text-2xl font-bold text-gray-800">Update Fees</div>
+            </div>
+            <div className="bg-white rounded-lg shadow-md p-6">
+              <UpdateFeesComp/>
             </div>
           </>
         )
