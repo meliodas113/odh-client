@@ -6,5 +6,5 @@ export const categoryTabs = [
   { label: "🏀 Sports", value: "sports" },
   { label: "🪙 Crypto", value: "crypto" },
   { label: "🗳️ Politics", value: "politics" },
-  { label: "🎬 Pop Culture", value: "pop" },
+  { label: "🎬 Pop Culture", value: "pop culture" },
 ];
