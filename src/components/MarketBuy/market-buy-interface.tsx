@@ -209,7 +209,7 @@ export function MarketBuyInterface({
                             id="amount-input"
                             type="number"
                             placeholder="Enter amount"
-                            value={amount || ""}
+                            value={amount}
                             onChange={(e) => {
                               const value = Math.max(0, Number(e.target.value));
                               setAmount(value);

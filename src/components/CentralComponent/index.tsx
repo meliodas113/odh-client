@@ -142,57 +142,13 @@ export default function OddsHubCentral() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
           >
-            <motion.div
-              className="bg-gradient-to-r from-white-600 to-white-600 p-1 rounded-lg shadow-lg inline-block mb-2"
-              // initial={{ opacity: 0, scale: 0.8 }}
-              // animate={{ opacity: 1, scale: 1 }}
-              // transition={{ delay: 0.2, duration: 0.5 }}
-              // whileHover={{
-              //   scale: 1.05,
-              //   boxShadow: "0 0 25px rgba(59, 130, 246, 0.6)",
-              // }}
-            >
+            <motion.div className="bg-gradient-to-r from-white-600 to-white-600 p-1 rounded-lg shadow-lg inline-block mb-2">
               <h2 className="text-xl md:text-2xl font-bold tracking-wide bg-[rgb(15,23,42)] px-6 py-2 rounded-md">
                 <span className="bg-gradient-to-r from-white-400 to-white-300 bg-clip-text text-white">
                   Welcome to OddsHub
                 </span>
               </h2>
             </motion.div>
-
-            {/* <motion.h1
-              className="text-5xl font-bold tracking-tighter sm:text-6xl md:text-7xl bg-gradient-to-r from-white to-blue-300 bg-clip-text text-transparent cursor-default"
-              onMouseEnter={() => setIsHovering(true)}
-              onMouseLeave={() => setIsHovering(false)}
-              whileHover={{ scale: 1.05 }}
-              transition={{ type: "spring", stiffness: 300 }}
-            >
-              <span className="relative inline-block mr-2">
-                odds
-                <motion.span
-                  className="absolute -top-6 -right-6 text-blue-400 text-2xl font-light opacity-0"
-                  animate={{
-                    opacity: isHovering ? 1 : 0,
-                    y: isHovering ? 0 : 10,
-                  }}
-                  transition={{ duration: 0.3 }}
-                >
-                  predict
-                </motion.span>
-              </span>
-              <span className="relative inline-block">
-                Hub
-                <motion.span
-                  className="absolute -bottom-6 -right-6 text-blue-400 text-2xl font-light opacity-0"
-                  animate={{
-                    opacity: isHovering ? 1 : 0,
-                    y: isHovering ? 0 : -10,
-                  }}
-                  transition={{ duration: 0.3 }}
-                >
-                  win
-                </motion.span>
-              </span>
-            </motion.h1> */}
 
             {/* Animated slogan with letter reveal */}
             <div className="mx-auto max-w-[700px] text-gray-300 text-xl md:text-2xl overflow-hidden mt-3">

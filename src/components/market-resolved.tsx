@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 
 import { Button } from "./ui/button";
-import { useAccount, useSendTransaction } from "wagmi";
+import { useAccount } from "wagmi";
 import { useState } from "react";
 import { useWriteContract } from "wagmi";
 import { abi } from "./ABI/abi";
