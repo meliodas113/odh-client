@@ -45,7 +45,7 @@ export interface SharesBalance {
 
 export function MarketCard({ index, filter, category }: MarketCardProps) {
   const account = useAccount();
-   
+
   const { data: marketData, isLoading: isLoadingMarketData } = useReadContract({
     abi,
     address: CONTRACT_ADDRESS,
@@ -91,7 +91,7 @@ export function MarketCard({ index, filter, category }: MarketCardProps) {
       }
     : undefined;
 
-  console.log("The market id is",market,index)
+  // console.log("The market id is",market,index)
 
   const { data: sharesBalanceData } = useReadContract({
     abi,
@@ -100,7 +100,7 @@ export function MarketCard({ index, filter, category }: MarketCardProps) {
     args: [BigInt(index), account?.address as string],
   });
 
-  if(market?.question.toLowerCase()==="none"){
+  if (market?.question.toLowerCase() === "none") {
     return null;
   }
   const sharesData: [bigint, bigint] = sharesBalanceData as [bigint, bigint];
