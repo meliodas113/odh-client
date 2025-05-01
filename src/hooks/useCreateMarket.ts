@@ -17,43 +17,30 @@ function useCreateMarket({
   image,
   outcome1,
   outcome2,
-  deadline
+  deadline,
 }: Data) {
-
   const [enableQuery, setEnableQuery] = useState(false);
-  const {
-    writeContract,
-    data,
-    error:contractError
-  }=useWriteContract();
+  const { writeContract, data, error: contractError } = useWriteContract();
 
-  const timeleft=Math.floor((deadline-(new Date().getTime()))/1000)
-  console.log(new Date().getTime())
-  console.log(timeleft,deadline)
-  console.log(contractError,enableQuery)
+  const timeleft = Math.floor((deadline - new Date().getTime()) / 1000);
+  console.log(new Date().getTime());
+  console.log(timeleft, deadline);
+  console.log(contractError, enableQuery);
 
   const createMarket = async () => {
-    try{
-      setEnableQuery(true)
+    try {
+      setEnableQuery(true);
       writeContract({
-        abi:abi,
-        address:CONTRACT_ADDRESS,
-        functionName:'createMarket',
-        args:[
-          heading,
-          image,
-          category,
-          outcome1,
-          outcome2,
-          300
-        ]
-      })
+        abi: abi,
+        address: CONTRACT_ADDRESS,
+        functionName: "createMarket",
+        args: [heading, image, category, outcome1, outcome2, timeleft],
+      });
       return data;
-    }catch(err){
-      setEnableQuery(false)
-      console.log(err)
+    } catch (err) {
+      setEnableQuery(false);
+      console.log(err);
     }
-   
   };
 
   return { createMarket };

@@ -16,27 +16,10 @@ export function Footer() {
             >
               @0xOddshub
             </Link>
-            . The source code is available on{" "}
-            <Link
-              href="https://github.com/meliodas113/odh-client"
-              target="_blank"
-              rel="noreferrer"
-              className="font-medium text-[#60A5FA] hover:text-[#E0F2FE] underline underline-offset-4 transition-colors"
-            >
-              GitHub
-            </Link>
             .
           </p>
         </div>
-        <div className="flex items-center gap-4">
-          <Link
-            href="https://github.com/meliodas113/odh-client"
-            target="_blank"
-            rel="noreferrer"
-          >
-            <Github className="h-5 w-5 text-[#A3BFFA] hover:text-[#E0F2FE] transition-colors" />
-          </Link>
-        </div>
+        <div className="flex items-center gap-4"></div>
       </div>
     </footer>
   );
