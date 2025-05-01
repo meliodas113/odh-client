@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-export const CONTRACT_ADDRESS="0x7b4f8f7dd39f813b7e47e74ddeca7b680083a353";
+export const CONTRACT_ADDRESS="0x2dcfe33d4797415c9775c9e7a7a59d77708b3da1";
 
 
 export const colorStyles = {
