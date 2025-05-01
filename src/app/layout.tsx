@@ -17,10 +17,10 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head>
-        <title>OddsHub | Turn Insights into Income</title>
+        <title>OddsHub | </title>
         <meta
-          name="OddsHub"
-          content="On-chain prediction market on the EtherLink ecosystem."
+          name="OddsHub | Your gateway to the future of prediction markets"
+          content="Your gateway to the future of prediction markets"
         />
         <link rel="icon" href="/assets/logos/oddshublogo.png" />
       </head>
