@@ -230,7 +230,7 @@ export default function AdminPortal() {
       action == 2 && (
           <>
             <div className="flex items-center justify-between mb-6 border-b border-gray-300 pb-4">
-              <div className="text-2xl font-bold text-gray-800">Settle Markets</div>
+              <div className="text-2xl font-bold text-gray-800">Add Admin</div>
             </div>
             <div className="bg-white rounded-lg shadow-md p-6">
               <AddAdmin/>

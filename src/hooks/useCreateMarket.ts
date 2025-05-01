@@ -26,7 +26,10 @@ function useCreateMarket({
     data,
     error:contractError
   }=useWriteContract();
-  const timeleft=deadline-new Date().getTime()
+
+  const timeleft=Math.floor((deadline-(new Date().getTime()))/1000)
+  console.log(new Date().getTime())
+  console.log(timeleft,deadline)
   console.log(contractError,enableQuery)
 
   const createMarket = async () => {
@@ -42,7 +45,7 @@ function useCreateMarket({
           category,
           outcome1,
           outcome2,
-          timeleft
+          300
         ]
       })
       return data;

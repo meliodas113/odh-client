@@ -91,12 +91,18 @@ export function MarketCard({ index, filter, category }: MarketCardProps) {
       }
     : undefined;
 
+ 
+
   const { data: sharesBalanceData } = useReadContract({
     abi,
     address: CONTRACT_ADDRESS,
     functionName: "getSharesBalance",
     args: [BigInt(index), account?.address as string],
   });
+  
+  if(market?.question.toLowerCase()==="none"){
+    return null;
+  }
   const sharesData: [bigint, bigint] = sharesBalanceData as [bigint, bigint];
   const sharesBalance: SharesBalance | undefined = sharesBalanceData
     ? {
@@ -104,7 +110,6 @@ export function MarketCard({ index, filter, category }: MarketCardProps) {
         optionBShares: sharesData[1],
       }
     : undefined;
-
   const isExpired = new Date(Number(market?.endTime) * 1000) < new Date();
   const isResolved = market?.resolved;
   const shouldShow = () => {
