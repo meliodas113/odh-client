@@ -6,10 +6,10 @@ export const AddAdmin = () => {
   const [address, setAddress] = useState<string>("");
   const { address: connectedAddress } = useAccount();
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  const {addAdmin}=useAddAdmin();
+  const { addAdmin } = useAddAdmin();
   const handleAddAdmin = async () => {
     if (!address) {
-       console.log("The Admin is",address)
+      //  console.log("The Admin is",address)
     }
 
     if (!address.match(/^0x[a-fA-F0-9]{40}$/)) {
@@ -17,20 +17,23 @@ export const AddAdmin = () => {
     }
 
     try {
-     const result=await addAdmin(address)
-      console.log("Adding admin with address:", address,result);
+      const result = await addAdmin(address);
+      // console.log("Adding admin with address:", address, result);
     } catch (error) {
-      console.error("Error adding admin:", error);  
+      console.error("Error adding admin:", error);
+    }
   };
-}
 
   return (
     <div className="w-full max-w-md mx-auto">
       <div className="bg-white rounded-lg shadow-md p-6">
         <h2 className="text-xl font-bold text-gray-800 mb-6">Add New Admin</h2>
-        
+
         <div className="mb-6">
-          <label htmlFor="admin-address" className="block text-sm font-medium text-gray-700 mb-1">
+          <label
+            htmlFor="admin-address"
+            className="block text-sm font-medium text-gray-700 mb-1"
+          >
             Admin Address
           </label>
           <input
@@ -75,4 +78,4 @@ export const AddAdmin = () => {
       </div>
     </div>
   );
-}
+};
