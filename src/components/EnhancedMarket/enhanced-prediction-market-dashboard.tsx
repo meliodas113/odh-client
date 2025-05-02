@@ -1,6 +1,5 @@
 "use client";
 import { useState } from "react";
-import "./styles.css";
 
 import { useReadContract } from "wagmi";
 import { abi } from "../ABI/abi";
@@ -33,7 +32,7 @@ export function EnhancedPredictionMarketDashboard() {
         <div>
           <OddsHubCentral />
         </div>
-        <div className="CategoryTabs flex gap-2 mb-4 flex-wrap">
+        <div className="flex flex-row justify-start px-[18px] py-[12px] rounded-[12px] gap-2 mb-4 flex-wrap">
           {categoryTabs.map((tab) => (
             <div
               key={tab.value}

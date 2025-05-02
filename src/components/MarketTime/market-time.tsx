@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react";
 import { Clock } from "lucide-react";
 import clsx from "clsx";
-import "./styles.css";
 
 interface MarketTimeProps {
   endTime: bigint;
