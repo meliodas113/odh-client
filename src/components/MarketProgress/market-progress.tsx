@@ -94,15 +94,15 @@ export function MarketProgress({
       </div>
 
       {/* Stats */}
-      <div className="flex flex-col sm:flex-row justify-between text-sm text-white/70 gap-2">
+      <div className="flex flex-row justify-between text-sm text-white/70 gap-2">
         <div className="flex items-center">
-          <span className="mr-2">Option A Shares:</span>
+          <span className="mr-2">{optionA} Shares:</span>
           <span className="font-semibold text-white">
             {(aShares / 1e18).toLocaleString()}
           </span>
         </div>
         <div className="flex items-center">
-          <span className="mr-2">Option B Shares:</span>
+          <span className="mr-2">{optionB} Shares:</span>
           <span className="font-semibold text-white">
             {(bShares / 1e18).toLocaleString()}
           </span>

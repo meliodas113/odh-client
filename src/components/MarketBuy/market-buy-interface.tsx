@@ -123,7 +123,7 @@ export function MarketBuyInterface({
     <div className="relative transition-all overflow-hidden rounded-lg bg-[#161b2e] shadow-md max-w-full">
       <div
         ref={contentRef}
-        className={`w-full p-4 transition-all ${
+        className={`w-full p-2 sm:p-3 md:p-4 transition-all ${
           isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
         }`}
       >

@@ -2,7 +2,7 @@
  * Supported categories of markets.
  */
 export const categoryTabs = [
-  { label: "🔥 Trending Markets", value: "trending" },
+  { label: "🔥 Trending", value: "trending" },
   { label: "🏀 Sports", value: "sports" },
   { label: "🪙 Crypto", value: "Crypto Market" },
   { label: "🗳️ Politics", value: "Global Politics" },
