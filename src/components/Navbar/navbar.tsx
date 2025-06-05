@@ -24,9 +24,10 @@ export function Navbar() {
         </div>
 
         <div className="flex items-center gap-4">
-          <ConnectButton label='Connect Wallet'>
-
-          </ConnectButton>
+          <ConnectButton label='Connect Wallet' showBalance={false} chainStatus={"icon"} accountStatus={{
+            smallScreen: 'full',
+            largeScreen: 'full',
+          }}/>
         </div>
       </div>
     </nav>

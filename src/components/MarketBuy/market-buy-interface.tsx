@@ -38,7 +38,7 @@ export function MarketBuyInterface({
   const contentRef = useRef<HTMLDivElement>(null);
 
   const [selectedOption, setSelectedOption] = useState<Option>(null);
-  const [amount, setAmount] = useState(0);
+  const [amount, setAmount] = useState<string>("");
   const [buyingStep, setBuyingStep] = useState<BuyingStep>("initial");
   const [isConfirming, setIsConfirming] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -85,14 +85,14 @@ export function MarketBuyInterface({
       setIsBuying(false);
       setBuyingStep("initial");
       setSelectedOption(null);
-      setAmount(0);
+      setAmount("");
       setError(null);
       setIsVisible(true);
     }, 200);
   };
 
   const handleConfirm = async () => {
-    if (!selectedOption || amount <= 0) {
+    if (!selectedOption || Number(amount) <= 0) {
       setError("Must select an option and enter an amount greater than 0");
       return;
     }
@@ -209,7 +209,7 @@ export function MarketBuyInterface({
                             value={amount}
                             onChange={(e) => {
                               const value = Math.max(0, Number(e.target.value));
-                              setAmount(value);
+                              setAmount(value.toString());
                               setError(null);
                             }}
                             onKeyDown={(e) => {
@@ -244,7 +244,7 @@ export function MarketBuyInterface({
                         </button>
                         <button
                           onClick={() => {
-                            if (amount > 0) {
+                            if (Number(amount)> 0) {
                               setBuyingStep("confirm");
                             } else {
                               setError("Enter a valid amount greater than 0");
