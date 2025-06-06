@@ -40,28 +40,28 @@ export default function OddsHubCentral() {
       position: { x: 85, y: 60 },
       size: mobileDevice ? 55 : 120,
       image:
-        "https://media-hosting.imagekit.io/ed1bdc27ca594e3c/solana.png?Expires=1840642892&Key-Pair-Id=K2ZIVPTIP2VGHC&Signature=lEX1QCiJ84T-VL3JnFch6My~NPfCLHFTIzpMynZCPf2YYXQR2Ak~aSV2ECQKZLyKe2yNpZa61Se1vIbBPbYHaQ9f7BehIr-e7Hc6JQjY0m2Ocnip~Uw5bF0RXer-qYkvwz9s6TeX5aYUmf0xH7-yUDh2VioR2RT9gIPC6IhjwTcMGdYeG4WaraCZkrLcc-ook73~f0Eve3SgD~ofkXOeOqvOPSnGJQtk~MNRQ66Bcm3T535m-vFXnwN9kJvbEzheUjVe-lOtKFCittdDrG-llmBdtdJhOWf~w8r7QMI58wH07W0Cq0s2GN7~uyS6LRQIrhnhpeKD7ZgWacbFTVP1tA__",
+        "/assets/logos/btc.svg",
     },
     {
       id: 3,
       position: { x: 25, y: 70 },
       size: mobileDevice ? 55 : 95,
       image:
-        "https://media-hosting.imagekit.io/169675aaf79c4256/rvsu.png?Expires=1840643195&Key-Pair-Id=K2ZIVPTIP2VGHC&Signature=NroFU8NFtrI77TNJXn9H64vKTuyzKrQr4eNQiRljfy-zSv53QpiWG96bUQWIAxkvN-FQEDgWYjbsN0Q15T4QfSTvflK0a96Ueqej4gmIy54Ax-QWt~Ou3QfNSflQJNhLhnLsSCKe8AMSTiaXSuIAXl1dxN6I~F2jJY9IAN2ksmIKTW8M4lqWhZ48vVYcfhb9Bu2UjCPKZ0xW3vdb~MpY~7Q6AVXL1wEEiT0PLMWfI7aszsaS6r8jbmgIaabKrw3UtGBdNQ6sfYwMdLp4fVMWm3fMweFQ~vgDX~RZXNsjkGvnRUPZizU9bWOQpat-gf1Z23Ti65INgZDggXK1lsMxuQ__",
+        "/assets/logos/eth.svg",
     },
     {
       id: 4,
       position: { x: 75, y: 15 },
       size: mobileDevice ? 65 : 125,
       image:
-        "https://media-hosting.imagekit.io/ec75493b6746491e/rcb.jpg?Expires=1838971098&Key-Pair-Id=K2ZIVPTIP2VGHC&Signature=VPJCCXvdOXLF-Up5QOTB9XiDq9E27VHVxjkAYL2kwR2KkNkeYRCGrDcG1XIW53nYGdvaqmxJrOz9ibqWvSSkZJLcO3Ytn9yfLuV5ZpwdXaLREKTIRZ2pN9GyjyUJHUchDhUjNojY3iqFkaeIBqzTz8ibJUJus9U6s3cI-B0woV-JGPisOOsPkdoCPy67z~0YPMyaKAuVTLDrf5oijQQY~L5maV2lVxol-eUSLTweyp6HF2CcquUARU26l5Cau-10F48UALvRFIxzdbt0xHz4XM~AHJIOxPPLf6Q8GiXx6JSWlERxzZ7uJe68AGbJ4tS5I-LEpDCq~fC2nI3NHnaEKQ__",
+        "/assets/logos/nba.svg",
     },
     {
       id: 5,
       position: { x: 45, y: 25 },
       size: mobileDevice ? 85 : 75,
       image:
-        "https://media-hosting.imagekit.io/79717cfc320142e6/btc-logo.webp?Expires=1838970376&Key-Pair-Id=K2ZIVPTIP2VGHC&Signature=sFm1rl0ECMpvzkPBGEyJ2XEQ3Ibox57cLB3h2fT4Ohn06Cxzsk0LiaCnrZyjcdC~EVxo6x5iSpD9sKPQQCka4UNc~Kt2jYT~5JzGop6E5znb4K5vsNmWZuKhgdHenEqxtrhRYqqbBQlpysLkPTRx0nFa-QkjcP2UXszU68AO0g4vxIxuVb-u0kpJIOSkpbsbdyUXU5zwzTdbxviDd02BkM5Nr4Nd6Fv10nciNpP3J5ARmVnD-2gXlwvCKZPpfSlgAo7iTyVCdrqa6mRks4s7~L5IO82VRTKtn-mDMqlZYe8F5S4MTwPYcYl8TOvX6TcEBhlo-bjwOkXsjPRrxU2iTw__",
+        "/assets/logos/club.svg",
     },
     {
       id: 6,
