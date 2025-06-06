@@ -33,7 +33,7 @@ export default function OddsHubCentral() {
       position: { x: mobileDevice ? 5 : 15, y: mobileDevice ? 10 : 20 },
       size: mobileDevice ? 50 : 100,
       image:
-        "https://media-hosting.imagekit.io/031dd2689cd34a9d/trumpXTariff.jpg?Expires=1838883324&Key-Pair-Id=K2ZIVPTIP2VGHC&Signature=Ak1pmwVqRe0bYWCUEiCSIRGUkc4eWMcEZ4LZHsZXcj9vK84OiJWqUCE34NOTP~~45o1ZL3KKQzLFF7izjv8hqJeaRetuIbkKEvPRLUkpWGE~QytT6W3v5oFJwYS80sC1bSNcEqDXOKJx0KrTuxok0k86tJXuKb3upURCtUO8MiR3em6bZ3twEt2lMztXnN0RZM55647C30mstD0VT9~~3FAUyzpuQdMhBGsqclAbktGgtbFwfVirKpeq5n-Ze3G6uVZmhTPlmMhBqX1S4th-hOFx7J5sMow8wwiz7vZxk2CGPoKrsPAA6wxGyivHrwRzi~nqA5Y6nAYDSJGSGyLm1Q__",
+        "/assets/logos/trump.svg",
     },
     {
       id: 2,
@@ -58,17 +58,17 @@ export default function OddsHubCentral() {
     },
     {
       id: 5,
-      position: { x: 45, y: 25 },
+      position: { x: 55, y: 75 },
       size: mobileDevice ? 85 : 75,
       image:
         "/assets/logos/club.svg",
     },
     {
       id: 6,
-      position: { x: 5, y: 85 },
+      position: { x: 5, y: 65 },
       size: mobileDevice ? 45 : 75,
       image:
-        "https://media-hosting.imagekit.io/80e1e56fa0c943c7/usdc_new.png?Expires=1839217737&Key-Pair-Id=K2ZIVPTIP2VGHC&Signature=qXvClgWu67vLyWr7aqcLSbieKj5v6I3Vs2-Sq3U1OJJJgb~0tfcbba1E~hbqOfQtdRRJs3s~yGjhFQ59cZCrjJ0SrWCBAL2t~~fZBaBXwrdEU3PuW8o6Il~zGRB~RYmJ54pY6Ok0OmjBA0NjqHlK4ghEvk9PlHTZQBMenhIlS5wn2pcry6XLU2eA8KypE2lQnBOGa2~PsZGsizrLQHXrWk43v5ml10tVUTXJicKzvM5sojgLRUKDYdC03MCxqn1ocKpE4dZ~WvDu8FVA4YSQwoaPY~vumlRPkMIRVnu5luzF0YIYuwUqbNbeeuWu2wZRf59CnCZ573~brIqHvH7neA__",
+        "/assets/logos/usdc.svg",
     },
   ];
 
@@ -140,7 +140,7 @@ export default function OddsHubCentral() {
             transition={{ duration: 0.8 }}
           >
             <motion.div className="bg-gradient-to-r from-white-600 to-white-600 p-1 rounded-lg shadow-lg inline-block mb-2">
-              <h2 className="text-xl md:text-2xl font-bold tracking-wide bg-[rgb(15,23,42)] px-6 py-2 rounded-md">
+              <h2 className="text-xl md:text-2xl font-bold tracking-wide px-6 py-2 rounded-md">
                 <span className="bg-gradient-to-r from-white-400 to-white-300 bg-clip-text text-white">
                   Welcome to OddsHub
                 </span>
