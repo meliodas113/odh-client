@@ -1,7 +1,6 @@
 import {
   Card,
   CardContent,
-  CardFooter,
   CardHeader,
   CardTitle,
 } from "./ui/card";
@@ -190,14 +189,10 @@ export function MarketCard({ index, filter, category }: MarketCardProps) {
             )}
           </CardContent>
           {market && sharesBalance && (
-            <CardFooter>
-              (
               <MarketSharesDisplay
                 market={market}
                 sharesBalance={sharesBalance}
               />
-              )
-            </CardFooter>
           )}
         </>
       )}

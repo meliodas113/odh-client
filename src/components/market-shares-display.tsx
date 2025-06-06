@@ -1,7 +1,7 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 import { Badge } from "./ui/badge";
 import { useEffect, useState } from "react";
 import { toFixed } from "@/lib/utils";
+
 interface MarketSharesDisplayProps {
   market: {
     optionA: string;
@@ -37,11 +37,13 @@ export function MarketSharesDisplay({
       option === "A" ? market.totalOptionBShares : market.totalOptionAShares;
 
     if (totalSharesForOption === BigInt(0)) return BigInt(0);
+
     const userProportion =
       (userShares * BigInt(1000000)) / totalSharesForOption;
 
     const winningsFromLosingShares =
       (totalLosingShares * userProportion) / BigInt(1000000);
+
     return userShares + winningsFromLosingShares;
   };
 
@@ -53,7 +55,6 @@ export function MarketSharesDisplay({
       B: calculateWinnings("B"),
     };
 
-    // Only update if values actually changed
     if (newWinnings.A !== winnings.A || newWinnings.B !== winnings.B) {
       setWinnings(newWinnings);
     }
@@ -61,26 +62,22 @@ export function MarketSharesDisplay({
 
   const displayWinningsA = toFixed(Number(winnings.A) / 1e18, 2);
   const displayWinningsB = toFixed(Number(winnings.B) / 1e18, 2);
+
+  if (winnings.A === BigInt(0) && winnings.B === BigInt(0)) return null;
+
   return (
-    <div className="flex flex-col gap-2">
-      <div className="w-full text-sm text-muted-foreground text-palette-text">
-        Your shares: {market.optionA} -{" "}
-        {Number(sharesBalance?.optionAShares) / 1e18}, {market.optionB} -{" "}
-        {Number(sharesBalance?.optionBShares) / 1e18}
-      </div>
-      {(winnings.A > 0 || winnings.B > 0) && (
-        <div className="flex flex-col gap-1">
-          <div className="text-xs text-muted-foreground">Winnings:</div>
-          <div className="flex gap-2">
-            <Badge variant="secondary">
-              {market.optionA}: {displayWinningsA} shares
-            </Badge>
-            <Badge variant="secondary">
-              {market.optionB}: {displayWinningsB} shares
-            </Badge>
-          </div>
+    <div className="flex flex-col gap-2 p-3 sm:p-3 md:p-5 pt-0 sm:pt-0 md:pt-0">
+      <div className="flex flex-row gap-5 items-center">
+        <div className="text-md text-muted-foreground">Winnings:</div>
+        <div className="flex gap-2">
+          <Badge variant="secondary">
+            {market.optionA}: {displayWinningsA} shares
+          </Badge>
+          <Badge variant="secondary">
+            {market.optionB}: {displayWinningsB} shares
+          </Badge>
         </div>
-      )}
+      </div>
     </div>
   );
 }
