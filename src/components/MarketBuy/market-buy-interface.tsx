@@ -9,7 +9,8 @@ import { CONTRACT_ADDRESS } from "@/constants/contract";
 import { parseEther } from "viem";
 import Modal from "@mui/material/Modal";
 import { Grow } from "@mui/material";
-
+import { useAccount } from "wagmi";
+import { ConnectButton } from "@rainbow-me/rainbowkit";
 interface MarketBuyInterfaceProps {
   question: string;
   marketId: number;
@@ -31,6 +32,9 @@ export function MarketBuyInterface({
   const { writeContract, data, error: contractError } = useWriteContract();
   const [enableQuery, setEnableQuery] = useState(false);
   const { toast } = useToast();
+  const {
+    address
+  }=useAccount();
 
   const [isBuying, setIsBuying] = useState(false);
   const [isVisible, setIsVisible] = useState(true);
@@ -242,7 +246,8 @@ export function MarketBuyInterface({
                         >
                           Cancel
                         </button>
-                        <button
+                        {
+                        address !== undefined ?<button
                           onClick={() => {
                             if (Number(amount)> 0) {
                               setBuyingStep("confirm");
@@ -254,6 +259,20 @@ export function MarketBuyInterface({
                         >
                           Proceed
                         </button>
+                        :
+                        (
+                          <ConnectButton.Custom>
+                            {({ openConnectModal }) => (
+                              <button
+                                onClick={openConnectModal}
+                                className="bg-blue-900 text-blue-100 rounded-full px-4 py-2 font-semibold hover:bg-blue-600"
+                              >
+                                Connect Wallet
+                              </button>
+                            )}
+                          </ConnectButton.Custom>
+                        )
+                        }
                       </div>
                     </>
                   )}
