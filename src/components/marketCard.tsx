@@ -13,7 +13,7 @@ import { MarketPending } from "./market-pending";
 import { MarketBuyInterface } from "./MarketBuy/market-buy-interface";
 import { MarketSharesDisplay } from "./market-shares-display";
 import Image from "next/image";
-import { CONTRACT_ADDRESS } from "@/constants/contract";
+import { CONTRACT_ADDRESS } from "@/lib/contract";
 import { abi } from "./ABI/abi";
 
 export interface MarketCardProps {

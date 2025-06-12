@@ -5,7 +5,7 @@ import { useAccount } from "wagmi";
 import { useState } from "react";
 import { useWriteContract } from "wagmi";
 import { abi } from "./ABI/abi";
-import { CONTRACT_ADDRESS } from "@/constants/contract";
+import { CONTRACT_ADDRESS } from "@/lib/contract";
 import { useToast } from "./ui/use-toast";
 import { useEffect } from "react";
 import { useReadContract } from "wagmi";

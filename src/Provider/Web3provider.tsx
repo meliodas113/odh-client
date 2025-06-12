@@ -33,7 +33,7 @@ const connectors= connectorsForWallets(
   { appName: 'OddsHub', projectId: '4f47bd4a835b9acb58623c50fc5cb8fe' },
 );
 
-const config = createConfig({
+export const config = createConfig({
    chains: [etherlink],
    connectors,
    transports:{

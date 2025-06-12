@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 export const CONTRACT_ADDRESS = "0x2dcfe33d4797415c9775c9e7a7a59d77708b3da1";
 export const tokenAddress = "0x2dcfe33d4797415c9775c9e7a7a59d77708b3da1";
+export const DEFAULT_GAS_PERCENTAGE = 150;
 
 export const colorStyles = {
   control: (styles: any) => ({

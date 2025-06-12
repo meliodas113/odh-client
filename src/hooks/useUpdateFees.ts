@@ -1,6 +1,6 @@
 import { abi } from "@/components/ABI/abi";
 import {useWriteContract } from "wagmi";
-import { CONTRACT_ADDRESS } from "@/constants/contract";
+import { CONTRACT_ADDRESS } from "@/lib/contract";
 import { useState } from "react";
 
 

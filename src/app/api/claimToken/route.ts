@@ -1,4 +1,4 @@
-import { tokenAddress } from "@/constants/contract";
+import { tokenAddress } from "@/lib/contract";
 import { NextResponse } from "next/server";
 
 const {

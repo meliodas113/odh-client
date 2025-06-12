@@ -17,7 +17,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head>
-        <title>OddsHub | </title>
+        <title>OddsHub</title>
         <meta
           name="OddsHub | Your gateway to the future of prediction markets"
           content="Your gateway to the future of prediction markets"

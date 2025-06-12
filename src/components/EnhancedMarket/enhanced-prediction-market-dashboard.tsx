@@ -3,7 +3,7 @@ import { useState } from "react";
 
 import { useReadContract } from "wagmi";
 import { abi } from "../ABI/abi";
-import { CONTRACT_ADDRESS } from "@/constants/contract";
+import { CONTRACT_ADDRESS } from "@/lib/contract";
 
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { MarketCard } from "../marketCard";
@@ -11,7 +11,7 @@ import { Navbar } from "../Navbar/navbar";
 import { MarketCardSkeleton } from "../market-card-skeleton";
 import OddsHubCentral from "../CentralComponent";
 import { Footer } from "../footer";
-import { categoryTabs } from "@/constants/config";
+import { categoryTabs } from "@/lib/config";
 
 export function EnhancedPredictionMarketDashboard() {
   const [selectedCategory, setSelectedCategory] = useState("trending");

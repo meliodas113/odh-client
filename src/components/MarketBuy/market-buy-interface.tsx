@@ -1,16 +1,21 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { useState, useRef, useEffect } from "react";
 import { useToast } from "@/components/ui/use-toast";
-import { useWriteContract } from "wagmi";
-
+import { useWriteContract, useEstimateGas } from "wagmi";
 import { Loader2 } from "lucide-react";
 import { abi } from "../ABI/abi";
-import { CONTRACT_ADDRESS } from "@/constants/contract";
+import { CONTRACT_ADDRESS } from "@/lib/contract";
+import { DEFAULT_GAS_PERCENTAGE } from "@/lib/contract";
 import { parseEther } from "viem";
 import Modal from "@mui/material/Modal";
 import { Grow } from "@mui/material";
 import { useAccount } from "wagmi";
+import { estimateGas } from "@wagmi/core";
 import { ConnectButton } from "@rainbow-me/rainbowkit";
+import { config } from "@/Provider/Web3provider";
+import { encodeFunctionData } from "viem";
+import { etherlink } from "viem/chains";
+
 interface MarketBuyInterfaceProps {
   question: string;
   marketId: number;
@@ -29,8 +34,9 @@ export function MarketBuyInterface({
   market,
   question,
 }: MarketBuyInterfaceProps) {
-  const { writeContract, data, error: contractError } = useWriteContract();
-  const [enableQuery, setEnableQuery] = useState(false);
+  const { writeContract, data } = useWriteContract();
+  const { }=useEstimateGas()
+  const [enableQuery, setEnableQuery] = useState<boolean>(false);
   const { toast } = useToast();
   const {
     address
@@ -102,6 +108,18 @@ export function MarketBuyInterface({
     }
     setIsConfirming(true);
     try {
+
+      const data=encodeFunctionData({
+        abi: abi,
+        functionName: "buyShares",
+        args: [BigInt(marketId), selectedOption === "A"],
+      })
+      const gasResult=await estimateGas(config,{
+        chainId:etherlink.id,
+        value: parseEther(amount.toString()),
+        to:CONTRACT_ADDRESS,
+        data:data
+      })
       setEnableQuery(true);
       writeContract({
         abi: abi,
@@ -109,6 +127,10 @@ export function MarketBuyInterface({
         address: CONTRACT_ADDRESS,
         args: [BigInt(marketId), selectedOption === "A"],
         value: parseEther(amount.toString()),
+        gas: gasResult
+        ? (((gasResult * BigInt(DEFAULT_GAS_PERCENTAGE)) /
+            BigInt(100)) as bigint)
+      : undefined,
       });
       setEnableQuery(false);
     } catch (error) {

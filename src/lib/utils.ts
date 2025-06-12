@@ -19,5 +19,3 @@ export function formatDate(dateString: string) {
         day: 'numeric'
     });
 }
-
-// Add any other utility functions here...
