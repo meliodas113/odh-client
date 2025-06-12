@@ -30,7 +30,7 @@ const connectors= connectorsForWallets(
       wallets: [coinbaseWallet, walletConnectWallet],
     },
   ],
-  { appName: 'RainbowKit App', projectId: 'fbb7dd672f032c12e043457e516544f4' },
+  { appName: 'OddsHub', projectId: '4f47bd4a835b9acb58623c50fc5cb8fe' },
 );
 
 const config = createConfig({
