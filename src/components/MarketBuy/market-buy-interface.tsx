@@ -15,6 +15,7 @@ import { ConnectButton } from "@rainbow-me/rainbowkit";
 import { config } from "@/Provider/Web3provider";
 import { encodeFunctionData } from "viem";
 import { etherlink } from "viem/chains";
+import Image from "next/image";
 
 interface MarketBuyInterfaceProps {
   question: string;
@@ -35,12 +36,10 @@ export function MarketBuyInterface({
   question,
 }: MarketBuyInterfaceProps) {
   const { writeContract, data } = useWriteContract();
-  const { }=useEstimateGas()
+  const {} = useEstimateGas();
   const [enableQuery, setEnableQuery] = useState<boolean>(false);
   const { toast } = useToast();
-  const {
-    address
-  }=useAccount();
+  const { address } = useAccount();
 
   const [isBuying, setIsBuying] = useState(false);
   const [isVisible, setIsVisible] = useState(true);
@@ -108,18 +107,17 @@ export function MarketBuyInterface({
     }
     setIsConfirming(true);
     try {
-
-      const data=encodeFunctionData({
+      const data = encodeFunctionData({
         abi: abi,
         functionName: "buyShares",
         args: [BigInt(marketId), selectedOption === "A"],
-      })
-      const gasResult=await estimateGas(config,{
-        chainId:etherlink.id,
+      });
+      const gasResult = await estimateGas(config, {
+        chainId: etherlink.id,
         value: parseEther(amount.toString()),
-        to:CONTRACT_ADDRESS,
-        data:data
-      })
+        to: CONTRACT_ADDRESS,
+        data: data,
+      });
       setEnableQuery(true);
       writeContract({
         abi: abi,
@@ -128,9 +126,9 @@ export function MarketBuyInterface({
         args: [BigInt(marketId), selectedOption === "A"],
         value: parseEther(amount.toString()),
         gas: gasResult
-        ? (((gasResult * BigInt(DEFAULT_GAS_PERCENTAGE)) /
-            BigInt(100)) as bigint)
-      : undefined,
+          ? (((gasResult * BigInt(DEFAULT_GAS_PERCENTAGE)) /
+              BigInt(100)) as bigint)
+          : undefined,
       });
       setEnableQuery(false);
     } catch (error) {
@@ -230,17 +228,42 @@ export function MarketBuyInterface({
                         <div className="flex items-center gap-3">
                           <input
                             id="amount-input"
-                            type="number"
-                            placeholder="Enter amount"
+                            type="text"
+                            inputMode="decimal" 
+                            placeholder="Enter amount in XTZ"
                             value={amount}
                             onChange={(e) => {
-                              const value = Math.max(0, Number(e.target.value));
-                              setAmount(value.toString());
-                              setError(null);
+                              const inputValue = e.target.value;
+                              if (inputValue === "") {
+                                setAmount("");
+                                setError(null);
+                                return;
+                              }
+                              const decimalRegex = /^(\d+\.?\d*|\.\d+)$/;
+
+                              if (decimalRegex.test(inputValue)) {
+                                const numValue = parseFloat(inputValue);
+                                if (!isNaN(numValue) && numValue >= 0) {
+                                  setAmount(inputValue);
+                                  setError(null);
+                                } else {
+                                  setError(
+                                    "Please enter a valid positive number"
+                                  );
+                                }
+                              } else if (inputValue === ".") {
+                                setAmount(inputValue);
+                                setError(null);
+                              }
                             }}
                             onKeyDown={(e) => {
-                              if (e.key === "-" || e.key === "e")
+                              const invalidKeys = ["-", "e", "E", "+"];
+                              if (invalidKeys.includes(e.key)) {
                                 e.preventDefault();
+                              }
+                              if (e.key === "." && amount.includes(".")) {
+                                e.preventDefault();
+                              }
                             }}
                             className={`w-full px-4 py-2 text-sm rounded-full border focus:outline-none ${
                               error
@@ -268,21 +291,20 @@ export function MarketBuyInterface({
                         >
                           Cancel
                         </button>
-                        {
-                        address !== undefined ?<button
-                          onClick={() => {
-                            if (Number(amount)> 0) {
-                              setBuyingStep("confirm");
-                            } else {
-                              setError("Enter a valid amount greater than 0");
-                            }
-                          }}
-                          className="bg-blue-900 text-blue-100 rounded-full px-4 py-2 font-semibold hover:bg-blue-600"
-                        >
-                          Proceed
-                        </button>
-                        :
-                        (
+                        {address !== undefined ? (
+                          <button
+                            onClick={() => {
+                              if (Number(amount) > 0) {
+                                setBuyingStep("confirm");
+                              } else {
+                                setError("Enter a valid amount greater than 0");
+                              }
+                            }}
+                            className="bg-blue-900 text-blue-100 rounded-full px-4 py-2 font-semibold hover:bg-blue-600"
+                          >
+                            Proceed
+                          </button>
+                        ) : (
                           <ConnectButton.Custom>
                             {({ openConnectModal }) => (
                               <button
@@ -293,8 +315,7 @@ export function MarketBuyInterface({
                               </button>
                             )}
                           </ConnectButton.Custom>
-                        )
-                        }
+                        )}
                       </div>
                     </>
                   )}
