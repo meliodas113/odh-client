@@ -13,7 +13,7 @@ import { MarketPending } from "./market-pending";
 import { MarketBuyInterface } from "./MarketBuy/market-buy-interface";
 import { MarketSharesDisplay } from "./market-shares-display";
 import Image from "next/image";
-import { CONTRACT_ADDRESS } from "@/lib/contract";
+import { CONTRACT_ADDRESS_ETHERLINK } from "@/lib/contract";
 import { abi } from "./ABI/abi";
 
 export interface MarketCardProps {
@@ -47,7 +47,7 @@ export function MarketCard({ index, filter, category }: MarketCardProps) {
 
   const { data: marketData, isLoading: isLoadingMarketData } = useReadContract({
     abi,
-    address: CONTRACT_ADDRESS,
+    address: CONTRACT_ADDRESS_ETHERLINK,
     functionName: "getMarketInfo",
     args: [BigInt(index)],
   });
@@ -94,7 +94,7 @@ export function MarketCard({ index, filter, category }: MarketCardProps) {
 
   const { data: sharesBalanceData } = useReadContract({
     abi,
-    address: CONTRACT_ADDRESS,
+    address: CONTRACT_ADDRESS_ETHERLINK,
     functionName: "getSharesBalance",
     args: [BigInt(index), account?.address as string],
   });

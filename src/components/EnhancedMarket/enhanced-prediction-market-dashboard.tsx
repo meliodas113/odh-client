@@ -1,9 +1,9 @@
 "use client";
-import { useState } from "react";
+import { use, useEffect, useState } from "react";
 
 import { useReadContract } from "wagmi";
 import { abi } from "../ABI/abi";
-import { CONTRACT_ADDRESS } from "@/lib/contract";
+import { CONTRACT_ADDRESS_ETHERLINK } from "@/lib/contract";
 
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { MarketCard } from "../marketCard";
@@ -12,13 +12,28 @@ import { MarketCardSkeleton } from "../market-card-skeleton";
 import OddsHubCentral from "../CentralComponent";
 import { Footer } from "../footer";
 import { categoryTabs } from "@/lib/config";
+import { useWalletStore } from "@/store/WalletStore";
+import { useShallow } from "zustand/react/shallow";
 
 export function EnhancedPredictionMarketDashboard() {
   const [selectedCategory, setSelectedCategory] = useState("trending");
+  const {
+    selectedChain,
+    contractAddress
+  }=useWalletStore(useShallow((state)=>({
+    selectedChain:state.selectedChain,
+    contractAddress:state.contractAddress
+  })))
+
+  useEffect(()=>{
+    if(!contractAddress || !selectedChain) return
+
+  },[selectedChain, contractAddress])
+
   const { data: marketCount, isLoading: isLoadingMarketCount } =
     useReadContract({
       abi,
-      address: CONTRACT_ADDRESS,
+      address: contractAddress as `0x${string}`,
       functionName: "marketCount",
     });
   const skeletonCards = Array.from({ length: 6 }, (_, i) => (

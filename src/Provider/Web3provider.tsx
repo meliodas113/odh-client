@@ -1,6 +1,6 @@
 "use client";
 import { createConfig, WagmiProvider } from "wagmi";
-import { etherlink } from "wagmi/chains";
+import { etherlink, moonbeam } from "wagmi/chains";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import {
   rabbyWallet,
@@ -34,10 +34,11 @@ const connectors= connectorsForWallets(
 );
 
 export const config = createConfig({
-   chains: [etherlink],
+   chains: [etherlink, moonbeam],
    connectors,
    transports:{
-    [etherlink.id]:http()
+    [etherlink.id]:http(),
+    [moonbeam.id]:http()
    }
 });
 
