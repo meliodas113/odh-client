@@ -27,7 +27,6 @@ export function Navbar() {
     if (chain && chain.id !== selectedChain) {
       switchChain({ chainId: chain.id });
       useWalletStore.getState().setSelectedChain(chain.id)
-      console.log("The chain Name is",chain.name)
       if(chain.name.toLowerCase().includes("ether")){
         useWalletStore.getState().setUsdcAddress(USDC_ETHERLINK)
         useWalletStore.getState().setContractAddress(CONTRACT_ADDRESS_ETHERLINK)

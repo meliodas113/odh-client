@@ -17,7 +17,7 @@ export const useFetchBalance=()=>{
     address
   }=useAccount();
 
-  const  { data : userBalance , isLoading: isLoadingUserBalance } = useReadContract({
+  const  { data, isLoading: isLoadingUserBalance } = useReadContract({
     abi:USDC_ABI,
     address: usdcAddress as `0x${string}`,
     functionName: "balanceOf",
@@ -30,8 +30,8 @@ export const useFetchBalance=()=>{
     }
   },
 );
-
-
+  console.log("The user balance is", data)
+  const userBalance=Number(data)/10**6;
   return {
     userBalance,
     isLoadingUserBalance

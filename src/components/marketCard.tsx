@@ -119,7 +119,6 @@ export function MarketCard({ index, filter, category }: MarketCardProps) {
     : undefined;
   const isExpired = new Date(Number(market?.endTime) * 1000) < new Date();
   const isResolved = market?.resolved;
-  console.log(marketData);
   const shouldShow = () => {
     if (!market) return false;
 

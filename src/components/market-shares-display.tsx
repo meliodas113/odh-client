@@ -20,7 +20,6 @@ export function MarketSharesDisplay({
   market,
   sharesBalance,
 }: MarketSharesDisplayProps) {
-  console.log("The market is", market, sharesBalance)
   const [winnings, setWinnings] = useState<{ A: bigint; B: bigint }>({
     A: BigInt(0),
     B: BigInt(0),
@@ -45,7 +44,6 @@ export function MarketSharesDisplay({
 
     const winningsFromLosingShares =
       (totalLosingShares * userProportion) / BigInt(1000000);
-      console.log("the winnings", winningsFromLosingShares + userShares )
     return userShares + winningsFromLosingShares;
   };
 
