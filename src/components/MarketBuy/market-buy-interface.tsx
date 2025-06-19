@@ -19,6 +19,7 @@ import { useWalletStore } from "@/store/WalletStore";
 import { useShallow } from "zustand/react/shallow";
 import { write } from "fs";
 import { USDC_ABI } from "../ABI/usdc_abi";
+import { useFetchBalance } from "@/hooks/useFetchBalance";
 
 interface MarketBuyInterfaceProps {
   question: string;
@@ -38,6 +39,10 @@ export function MarketBuyInterface({
   market,
   question,
 }: MarketBuyInterfaceProps) {
+  const {
+    userBalance,
+    isLoadingUserBalance
+  }=useFetchBalance();
   const { writeContract, data } = useWriteContract();
   const {} = useEstimateGas();
   const [enableQuery, setEnableQuery] = useState<boolean>(false);
@@ -80,7 +85,7 @@ export function MarketBuyInterface({
       });
       handleCancel();
     }
-  }, [data]);
+  }, [data, userBalance]);
 
   useEffect(() => {
     if (contentRef.current) {

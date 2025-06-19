@@ -27,7 +27,14 @@ export default function OddsHubCentral() {
   }, []);
 
   
-  const marketImages = [
+  type MarketImage = {
+    id: number;
+    position: { x: number; y: number };
+    size: number;
+    image: string;
+  };
+
+  const marketImages: MarketImage[] = [
     {
       id: 1,
       position: { x: mobileDevice ? 5 : 15, y: mobileDevice ? 10 : 20 },
@@ -44,7 +51,7 @@ export default function OddsHubCentral() {
     },
     {
       id: 3,
-      position: { x: 25, y: 70 },
+      position: { x: !mobileDevice ? 25 : 40, y: !mobileDevice ? 70 : 80 },
       size: mobileDevice ? 55 : 95,
       image:
         "/assets/logos/eth.svg",
@@ -56,13 +63,16 @@ export default function OddsHubCentral() {
       image:
         "/assets/logos/nba.svg",
     },
-    {
-      id: 5,
-      position: { x: 55, y: 75 },
-      size: mobileDevice ? 85 : 75,
-      image:
-        "/assets/logos/club.svg",
-    },
+    ...(!mobileDevice
+      ? [
+          {
+            id: 5,
+            position: { x: 55, y: 75 },
+            size: mobileDevice ? 85 : 75,
+            image: "/assets/logos/club.svg",
+          },
+        ]
+      : []),
     {
       id: 6,
       position: { x: 5, y: 65 },

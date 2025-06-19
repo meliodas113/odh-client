@@ -159,11 +159,11 @@ export function MarketCard({ index, filter, category }: MarketCardProps) {
               <Image
                 src={market?.imageURI || ""}
                 alt="Market Icon"
-                className="w-6 h-6 text-card-title"
-                height={30}
-                width={30}
+                className="w-7 h-7 text-card-title rounded-full flex justify-center align-center"
+                height={32}
+                width={33}
               />
-              <CardTitle className="text-title-light text-md">
+              <CardTitle className="text-title-light text-[15px]">
                 {market?.question}
               </CardTitle>
             </div>
