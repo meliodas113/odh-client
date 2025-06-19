@@ -6,7 +6,7 @@ import { CONTRACT_ADDRESS_ETHERLINK, CONTRACT_ADDRESS_MOONBEAM, USDC_ETHERLINK, 
 import { useShallow } from "zustand/react/shallow";
 import { CustomChainDropdown } from '../CustomDropDown';
 import { useEffect } from 'react';
-
+import { useMediaQuery } from '@mui/material';
 export function Navbar() {
   const { switchChain } = useSwitchChain();
   const {address, isConnected, chain}=useAccount();
@@ -16,7 +16,7 @@ export function Navbar() {
     selectedChain:state.selectedChain
   })))
 
-
+  const mobileDevice = useMediaQuery("(max-width: 600px)");
   useEffect(()=>{
     if(chain && useWalletStore.getState().selectedChain !== chain?.id){
       handleSwitchNetwork(chain)
@@ -45,14 +45,14 @@ export function Navbar() {
         <span className="text-[#f9fafb]">ddsHub</span>
       </div>
 
-      <div className="flex flex-row justify-end items-center gap-4 w-[30%]">
-        {<CustomChainDropdown
+      <div className="flex flex-row justify-end items-center gap-4 w-[70%] sm:w-[50%] lg:w-[35%]">
+        {!mobileDevice && <CustomChainDropdown
           selectedChain={selectedChain}
           onChange={handleSwitchNetwork}
         />}
         <ConnectButton label='Connect Wallet' showBalance={false} chainStatus={"none"} 
           accountStatus={{
-            smallScreen: 'full',
+            smallScreen:'full',
             largeScreen: 'full',
           }}
         />

@@ -97,7 +97,7 @@ export function MarketCard({ index, filter, category }: MarketCardProps) {
       }
     : undefined;
 
-  console.log("The market id is",market?.question,index)
+  console.log("The market id is",market?.question,Number(market?.endTime),index )
 
   const { data: sharesBalanceData } = useReadContract({
     abi,

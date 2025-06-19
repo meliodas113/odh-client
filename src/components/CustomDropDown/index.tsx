@@ -12,7 +12,7 @@ interface Props{
    selectedChain:number;
 }
 
-export function CustomChainDropdown({ selectedChain, onChange }:Props) {
+export function CustomChainDropdown({ selectedChain }:Props) {
   const [open, setOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
 
@@ -34,7 +34,7 @@ export function CustomChainDropdown({ selectedChain, onChange }:Props) {
   const selected = CHAINS.find((c) => c.id === selectedChain);
 
   return (
-    <div className="relative w-[45%]" ref={dropdownRef}>
+    <div className="relative w-[45%] lg:w-[40%] xl:w-[35%]" ref={dropdownRef}>
       <button
         className={`flex w-full items-center gap-2 px-4 py-2 rounded-lg border border-[#283046] bg-[#23263b] text-[#f9fafb] font-medium shadow transition hover:border-[#60a5fa] focus:outline-none`}
         aria-haspopup="listbox"
@@ -47,11 +47,11 @@ export function CustomChainDropdown({ selectedChain, onChange }:Props) {
         <span className="bg-gradient-to-r from-[#60a5fa] to-[#f9fafb] bg-clip-text text-transparent font-bold">
           {selected?.name}
         </span>
-        <svg className={`w-4 h-4 transition-transform ${open ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        {/* {<svg className={`w-4 h-4 transition-transform ${open ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-        </svg>
+        </svg>} */}
       </button>
-      {open && (
+      {/* {open && (
         <ul
           className="absolute left-0 mt-2 w-full bg-[#23263b] border border-[#283046] rounded-lg shadow-lg z-50"
           role="listbox"
@@ -82,7 +82,7 @@ export function CustomChainDropdown({ selectedChain, onChange }:Props) {
             </li> 
           ))}
         </ul>
-      )}
+      )} */}
     </div>
   );
 }
