@@ -58,6 +58,31 @@ export const abi=[
     "inputs": [
       {
         "indexed": true,
+        "internalType": "address",
+        "name": "recipient",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "amount",
+        "type": "uint256"
+      },
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "admin",
+        "type": "address"
+      }
+    ],
+    "name": "FundsWithdrawn",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
         "internalType": "uint256",
         "name": "marketId",
         "type": "uint256"
@@ -113,7 +138,7 @@ export const abi=[
       },
       {
         "indexed": false,
-        "internalType": "enum MarketManager.MarketOutcome",
+        "internalType": "enum MarketFactory.MarketOutcome",
         "name": "outcome",
         "type": "uint8"
       }
@@ -195,11 +220,16 @@ export const abi=[
         "internalType": "bool",
         "name": "_isOptionA",
         "type": "bool"
+      },
+      {
+        "internalType": "uint256",
+        "name": "usdc_amount",
+        "type": "uint256"
       }
     ],
     "name": "buyShares",
     "outputs": [],
-    "stateMutability": "payable",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -336,7 +366,7 @@ export const abi=[
             "type": "uint256"
           },
           {
-            "internalType": "enum MarketManager.MarketOutcome",
+            "internalType": "enum MarketFactory.MarketOutcome",
             "name": "outcome",
             "type": "uint8"
           },
@@ -366,7 +396,7 @@ export const abi=[
             "type": "bool"
           }
         ],
-        "internalType": "struct MarketManager.MarketView[]",
+        "internalType": "struct MarketFactory.MarketView[]",
         "name": "",
         "type": "tuple[]"
       }
@@ -415,7 +445,7 @@ export const abi=[
         "type": "uint256"
       },
       {
-        "internalType": "enum MarketManager.MarketOutcome",
+        "internalType": "enum MarketFactory.MarketOutcome",
         "name": "outcome",
         "type": "uint8"
       },
@@ -530,7 +560,7 @@ export const abi=[
         "type": "uint256"
       },
       {
-        "internalType": "enum MarketManager.MarketOutcome",
+        "internalType": "enum MarketFactory.MarketOutcome",
         "name": "outcome",
         "type": "uint8"
       },
@@ -610,7 +640,7 @@ export const abi=[
         "type": "uint256"
       },
       {
-        "internalType": "enum MarketManager.MarketOutcome",
+        "internalType": "enum MarketFactory.MarketOutcome",
         "name": "_outcome",
         "type": "uint8"
       }
@@ -643,6 +673,32 @@ export const abi=[
     ],
     "name": "updateFees",
     "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "usdc_token",
+    "outputs": [
+      {
+        "internalType": "contract IERC20",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "withdrawAllFunds",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "amount",
+        "type": "uint256"
+      }
+    ],
     "stateMutability": "nonpayable",
     "type": "function"
   }

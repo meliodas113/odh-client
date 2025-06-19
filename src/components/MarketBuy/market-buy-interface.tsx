@@ -5,7 +5,7 @@ import { useWriteContract, useEstimateGas } from "wagmi";
 import { Loader2 } from "lucide-react";
 import { abi } from "../ABI/abi";
 import { DEFAULT_GAS_PERCENTAGE } from "@/lib/contract";
-import { parseEther } from "viem";
+import { parseEther, parseUnits } from "viem";
 import Modal from "@mui/material/Modal";
 import { Grow } from "@mui/material";
 import { useAccount } from "wagmi";
@@ -17,6 +17,8 @@ import { etherlink } from "viem/chains";
 import Image from "next/image";
 import { useWalletStore } from "@/store/WalletStore";
 import { useShallow } from "zustand/react/shallow";
+import { write } from "fs";
+import { USDC_ABI } from "../ABI/usdc_abi";
 
 interface MarketBuyInterfaceProps {
   question: string;
@@ -43,10 +45,12 @@ export function MarketBuyInterface({
   const { address } = useAccount();
   const {
     contractAddress,
-    chainId
+    chainId,
+    usdcAddress
   }=useWalletStore(useShallow((state)=>({
     contractAddress:state.contractAddress,
-    chainId:state.selectedChain
+    chainId:state.selectedChain,
+    usdcAddress:state.usdcAddress
   })))
   const [isBuying, setIsBuying] = useState(false);
   const [isVisible, setIsVisible] = useState(true);
@@ -127,11 +131,23 @@ export function MarketBuyInterface({
       });
       setEnableQuery(true);
       writeContract({
+        abi:USDC_ABI,
+        address:usdcAddress as `0x${string}`,
+        functionName:'approve',
+        args: [
+          contractAddress,
+          parseUnits(amount, 6)
+        ]
+      })
+      writeContract({
         abi: abi,
         functionName: "buyShares",
         address: contractAddress as `0x${string}`,
-        args: [BigInt(marketId), selectedOption === "A"],
-        value: parseEther(amount.toString()),
+        args: [
+          BigInt(marketId), 
+          selectedOption === "A",
+          parseUnits(amount, 6)
+        ],
         gas: gasResult
           ? (((gasResult * BigInt(DEFAULT_GAS_PERCENTAGE)) /
               BigInt(100)) as bigint)
@@ -195,7 +211,7 @@ export function MarketBuyInterface({
                             ? market.optionA
                             : market.optionB}{" "}
                         </span>
-                        share(s).
+                        worth of share(s).
                       </p>
                       <div className="flex justify-center gap-4">
                         <button
@@ -238,7 +254,7 @@ export function MarketBuyInterface({
                             id="amount-input"
                             type="text"
                             inputMode="decimal" 
-                            placeholder="Enter amount in XTZ"
+                            placeholder="Enter amount in USD"
                             value={amount}
                             onChange={(e) => {
                               const inputValue = e.target.value;

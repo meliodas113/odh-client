@@ -8,6 +8,8 @@ interface WalletStore{
     setSelectedChain: (chainId : number)=>void;
     contractAddress:string;
     setContractAddress:(contractAddress : string)=>void;
+    usdcAddress:string;
+    setUsdcAddress:(usdc:string)=>void;
 }
 
 
@@ -18,6 +20,7 @@ export const useWalletStore=create<WalletStore>((set) => ({
         userWalletAddress:walletAddress
     }))
     },
+    usdcAddress:"0x796Ea11Fa2dD751eD01b53C372fFDB4AAa8f00F9",
     selectedChain : etherlink.id,
     setSelectedChain:(chainId : number)=>{
     set(()=>({
@@ -30,4 +33,9 @@ export const useWalletStore=create<WalletStore>((set) => ({
             contractAddress:contractAddress
         }))
     },
+    setUsdcAddress:(usdc:string)=>{
+        set(()=>({
+            usdcAddress:usdc
+        }))
+    }
 }))

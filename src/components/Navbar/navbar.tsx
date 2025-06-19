@@ -2,7 +2,7 @@ import { ConnectButton } from '@rainbow-me/rainbowkit';
 import { Chain} from "viem/chains";
 import { useAccount, useSwitchChain } from "wagmi";
 import { useWalletStore } from '@/store/WalletStore';
-import { CONTRACT_ADDRESS_ETHERLINK, CONTRACT_ADDRESS_MOONBEAM } from '@/lib/contract';
+import { CONTRACT_ADDRESS_ETHERLINK, CONTRACT_ADDRESS_MOONBEAM, USDC_ETHERLINK, USDC_MOONBEAM } from '@/lib/contract';
 import { useShallow } from "zustand/react/shallow";
 import { CustomChainDropdown } from '../CustomDropDown';
 import { useEffect } from 'react';
@@ -29,9 +29,10 @@ export function Navbar() {
       useWalletStore.getState().setSelectedChain(chain.id)
       console.log("The chain Name is",chain.name)
       if(chain.name.toLowerCase().includes("ether")){
-
+        useWalletStore.getState().setUsdcAddress(USDC_ETHERLINK)
         useWalletStore.getState().setContractAddress(CONTRACT_ADDRESS_ETHERLINK)
       }else{
+        useWalletStore.getState().setUsdcAddress(USDC_MOONBEAM);
         useWalletStore.getState().setContractAddress(CONTRACT_ADDRESS_MOONBEAM);
       }
     }
