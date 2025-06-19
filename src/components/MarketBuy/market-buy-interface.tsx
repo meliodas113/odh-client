@@ -2,7 +2,7 @@
 import { useState, useRef, useEffect } from "react";
 import { useToast } from "@/components/ui/use-toast";
 import { useWriteContract, useEstimateGas } from "wagmi";
-import { ConstructionIcon, Loader2 } from "lucide-react";
+import { ConstructionIcon, Loader, Loader2 } from "lucide-react";
 import { abi } from "../ABI/abi";
 import { DEFAULT_GAS_PERCENTAGE } from "@/lib/contract";
 import { parseEther, parseUnits } from "viem";
@@ -19,6 +19,7 @@ import { useWalletStore } from "@/store/WalletStore";
 import { useShallow } from "zustand/react/shallow";
 import { write } from "fs";
 import { USDC_ABI } from "../ABI/usdc_abi";
+import { useFetchBalance } from "@/hooks/useFetchBalance";
 
 interface MarketBuyInterfaceProps {
   question: string;
@@ -38,6 +39,10 @@ export function MarketBuyInterface({
   market,
   question,
 }: MarketBuyInterfaceProps) {
+  const {
+    userBalance,
+    isLoadingUserBalance
+  }=useFetchBalance();
   const { writeContract, data } = useWriteContract();
   const {} = useEstimateGas();
   const [enableQuery, setEnableQuery] = useState<boolean>(false);
@@ -56,7 +61,7 @@ export function MarketBuyInterface({
   const [isVisible, setIsVisible] = useState(true);
   const [containerHeight, setContainerHeight] = useState("auto");
   const contentRef = useRef<HTMLDivElement>(null);
-
+  const [isSufficientBalance, setIsSufficientBalance]=useState<boolean>(false);
   const [selectedOption, setSelectedOption] = useState<Option>(null);
   const [amount, setAmount] = useState<string>("");
   const [buyingStep, setBuyingStep] = useState<BuyingStep>("initial");
@@ -80,7 +85,7 @@ export function MarketBuyInterface({
       });
       handleCancel();
     }
-  }, [data]);
+  }, [data, userBalance]);
 
   useEffect(() => {
     if (contentRef.current) {
@@ -89,6 +94,17 @@ export function MarketBuyInterface({
       }, 0);
     }
   }, [isBuying, buyingStep, isVisible, error]);
+
+  useEffect(()=>{
+    console.log("The amount is", amount, userBalance);
+    if(!userBalance && !isLoadingUserBalance ) return;
+
+   if (Number(amount) < userBalance) {
+    setIsSufficientBalance(true)
+   }else{
+    setIsSufficientBalance(false)
+   }
+  },[amount, userBalance, isLoadingUserBalance])
 
   const handleBuy = (option: Option) => {
     setIsVisible(false);
@@ -118,7 +134,6 @@ export function MarketBuyInterface({
     }
     setIsConfirming(true);
     try {
-      console.log(chainId, contractAddress, amount)
       // const data = encodeFunctionData({
       //   abi: abi,
       //   functionName: "buyShares",
@@ -207,16 +222,21 @@ export function MarketBuyInterface({
                       <h2 className="text-xl font-bold text-white">
                         Confirm Transaction
                       </h2>
-                      <p className="text-[#A3BFFA]">
+                      <p className="text-[#A3BFFA] flex flex-row gap-1">
                         You are about to buy
-                        <span className="font-semibold text-blue-500">
+                        <span className="font-semibold text-blue-500 flex flex-row align-center gap-1">
                           {" "}
-                          {amount}{" "}
-                          {selectedOption === "A"
-                            ? market.optionA
-                            : market.optionB}{" "}
+                          {amount}
+                          <Image src={"/assets/logos/usdc.svg"} height={22} width={22} alt=""/>
                         </span>
-                        worth of share(s).
+                        worth of
+                        <span className="font-semibold text-blue-500 flex flex-row align-center">
+                        {selectedOption === "A"
+                            ? market.optionA
+                            : market.optionB
+                          }
+                        </span>
+                        shares.
                       </p>
                       <div className="flex justify-center gap-4">
                         <button
@@ -323,15 +343,17 @@ export function MarketBuyInterface({
                         {address !== undefined ? (
                           <button
                             onClick={() => {
-                              if (Number(amount) > 0) {
+                              if (Number(amount) > 0 && userBalance > Number(amount)) {
                                 setBuyingStep("confirm");
-                              } else {
+                              } else if(userBalance < Number(amount)){
+                                setError("Enter a amount less than your balance");
+                              }else{
                                 setError("Enter a valid amount greater than 0");
                               }
                             }}
                             className="bg-blue-900 text-blue-100 rounded-full px-4 py-2 font-semibold hover:bg-blue-600"
                           >
-                            Proceed
+                            {isLoadingUserBalance ? <Loader/> : isSufficientBalance ? "Proceed" : "Insufficient Balance"}
                           </button>
                         ) : (
                           <ConnectButton.Custom>
