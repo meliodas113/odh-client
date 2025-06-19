@@ -2,7 +2,7 @@
 import { useState, useRef, useEffect } from "react";
 import { useToast } from "@/components/ui/use-toast";
 import { useWriteContract, useEstimateGas } from "wagmi";
-import { Loader2 } from "lucide-react";
+import { ConstructionIcon, Loader2 } from "lucide-react";
 import { abi } from "../ABI/abi";
 import { DEFAULT_GAS_PERCENTAGE } from "@/lib/contract";
 import { parseEther, parseUnits } from "viem";
@@ -118,17 +118,21 @@ export function MarketBuyInterface({
     }
     setIsConfirming(true);
     try {
-      const data = encodeFunctionData({
-        abi: abi,
-        functionName: "buyShares",
-        args: [BigInt(marketId), selectedOption === "A"],
-      });
-      const gasResult = await estimateGas(config, {
-        chainId: etherlink.id,
-        value: parseEther(amount.toString()),
-        to: contractAddress as `0x${string}`,
-        data: data,
-      });
+      console.log(chainId, contractAddress, amount)
+      // const data = encodeFunctionData({
+      //   abi: abi,
+      //   functionName: "buyShares",
+      //   args: [
+      //     BigInt(marketId), 
+      //     selectedOption === "A",
+      //     parseUnits(amount, 6)
+      //   ],
+      // });
+      // const gasResult = await estimateGas(config, {
+      //   chainId: etherlink.id,
+      //   to: contractAddress as `0x${string}`,
+      //   data: data,
+      // });
       setEnableQuery(true);
       writeContract({
         abi:USDC_ABI,
@@ -136,7 +140,7 @@ export function MarketBuyInterface({
         functionName:'approve',
         args: [
           contractAddress,
-          parseUnits(amount, 6)
+          parseUnits(amount, 8)
         ]
       })
       writeContract({
@@ -148,14 +152,15 @@ export function MarketBuyInterface({
           selectedOption === "A",
           parseUnits(amount, 6)
         ],
-        gas: gasResult
-          ? (((gasResult * BigInt(DEFAULT_GAS_PERCENTAGE)) /
-              BigInt(100)) as bigint)
-          : undefined,
+        // gas: gasResult
+        //   ? (((gasResult * BigInt(DEFAULT_GAS_PERCENTAGE)) /
+        //       BigInt(100)) as bigint)
+        //   : undefined,
         chainId:chainId
       });
       setEnableQuery(false);
     } catch (error) {
+      console.log("THe error is",error);
       setEnableQuery(false);
       toast({
         title: "Purchase Failed",
