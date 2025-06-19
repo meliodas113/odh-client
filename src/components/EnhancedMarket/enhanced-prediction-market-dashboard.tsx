@@ -1,10 +1,7 @@
 "use client";
-import { use, useEffect, useState } from "react";
-
+import { useEffect, useState } from "react";
 import { useReadContract } from "wagmi";
 import { abi } from "../ABI/abi";
-import { CONTRACT_ADDRESS_ETHERLINK } from "@/lib/contract";
-
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { MarketCard } from "../marketCard";
 import { Navbar } from "../Navbar/navbar";

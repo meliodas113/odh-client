@@ -1,25 +1,35 @@
-import { useState } from 'react';
 import { ConnectButton } from '@rainbow-me/rainbowkit';
-import { Chain, etherlink, moonbeam } from "viem/chains";
-import { useSwitchChain } from "wagmi";
+import { Chain} from "viem/chains";
+import { useAccount, useSwitchChain } from "wagmi";
 import { useWalletStore } from '@/store/WalletStore';
 import { CONTRACT_ADDRESS_ETHERLINK, CONTRACT_ADDRESS_MOONBEAM } from '@/lib/contract';
 import { useShallow } from "zustand/react/shallow";
 import { CustomChainDropdown } from '../CustomDropDown';
+import { useEffect } from 'react';
 
 export function Navbar() {
   const { switchChain } = useSwitchChain();
+  const {address, isConnected, chain}=useAccount();
   const {
     selectedChain
   }=useWalletStore(useShallow((state)=>({
     selectedChain:state.selectedChain
   })))
 
+
+  useEffect(()=>{
+    if(chain && useWalletStore.getState().selectedChain !== chain?.id){
+      handleSwitchNetwork(chain)
+    }
+  },[isConnected, chain, address])
+
   const handleSwitchNetwork = (chain: Chain) => {
     if (chain && chain.id !== selectedChain) {
       switchChain({ chainId: chain.id });
       useWalletStore.getState().setSelectedChain(chain.id)
+      console.log("The chain Name is",chain.name)
       if(chain.name.toLowerCase().includes("ether")){
+
         useWalletStore.getState().setContractAddress(CONTRACT_ADDRESS_ETHERLINK)
       }else{
         useWalletStore.getState().setContractAddress(CONTRACT_ADDRESS_MOONBEAM);
@@ -35,11 +45,11 @@ export function Navbar() {
         <span className="text-[#f9fafb]">ddsHub</span>
       </div>
 
-      <div className="flex items-center gap-4">
-        <CustomChainDropdown
+      <div className="flex flex-row justify-end items-center gap-4 w-[30%]">
+        {<CustomChainDropdown
           selectedChain={selectedChain}
           onChange={handleSwitchNetwork}
-        />
+        />}
         <ConnectButton label='Connect Wallet' showBalance={false} chainStatus={"none"} 
           accountStatus={{
             smallScreen: 'full',

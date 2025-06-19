@@ -13,8 +13,9 @@ import { MarketPending } from "./market-pending";
 import { MarketBuyInterface } from "./MarketBuy/market-buy-interface";
 import { MarketSharesDisplay } from "./market-shares-display";
 import Image from "next/image";
-import { CONTRACT_ADDRESS_ETHERLINK } from "@/lib/contract";
 import { abi } from "./ABI/abi";
+import { useWalletStore } from "@/store/WalletStore";
+import { useShallow } from "zustand/react/shallow";
 
 export interface MarketCardProps {
   index: number;
@@ -44,10 +45,16 @@ export interface SharesBalance {
 
 export function MarketCard({ index, filter, category }: MarketCardProps) {
   const account = useAccount();
-
+  const {
+    chainId,
+    contractAddress
+  }=useWalletStore(useShallow((state)=>({
+    chainId:state.selectedChain,
+    contractAddress:state.contractAddress
+  })))
   const { data: marketData, isLoading: isLoadingMarketData } = useReadContract({
     abi,
-    address: CONTRACT_ADDRESS_ETHERLINK,
+    address: contractAddress as `0x${string}`,
     functionName: "getMarketInfo",
     args: [BigInt(index)],
   });
@@ -90,13 +97,14 @@ export function MarketCard({ index, filter, category }: MarketCardProps) {
       }
     : undefined;
 
-  // console.log("The market id is",market,index)
+  console.log("The market id is",market?.question,index)
 
   const { data: sharesBalanceData } = useReadContract({
     abi,
-    address: CONTRACT_ADDRESS_ETHERLINK,
+    address: contractAddress as `0x${string}`,
     functionName: "getSharesBalance",
     args: [BigInt(index), account?.address as string],
+    chainId:chainId
   });
 
   if (market?.question.toLowerCase() === "none") {

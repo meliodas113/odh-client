@@ -4,7 +4,6 @@ import { useToast } from "@/components/ui/use-toast";
 import { useWriteContract, useEstimateGas } from "wagmi";
 import { Loader2 } from "lucide-react";
 import { abi } from "../ABI/abi";
-import { CONTRACT_ADDRESS_ETHERLINK } from "@/lib/contract";
 import { DEFAULT_GAS_PERCENTAGE } from "@/lib/contract";
 import { parseEther } from "viem";
 import Modal from "@mui/material/Modal";
@@ -15,8 +14,9 @@ import { ConnectButton } from "@rainbow-me/rainbowkit";
 import { config } from "@/Provider/Web3provider";
 import { encodeFunctionData } from "viem";
 import { etherlink } from "viem/chains";
-import { useShallow } from "zustand/react/shallow";
+import Image from "next/image";
 import { useWalletStore } from "@/store/WalletStore";
+import { useShallow } from "zustand/react/shallow";
 
 interface MarketBuyInterfaceProps {
   question: string;
@@ -36,17 +36,18 @@ export function MarketBuyInterface({
   market,
   question,
 }: MarketBuyInterfaceProps) {
-  const {
-    contractAddress
-  }=useWalletStore(useShallow((state)=>({
-    contractAddress:state.contractAddress
-  })))
   const { writeContract, data } = useWriteContract();
   const {} = useEstimateGas();
   const [enableQuery, setEnableQuery] = useState<boolean>(false);
   const { toast } = useToast();
   const { address } = useAccount();
-
+  const {
+    contractAddress,
+    chainId
+  }=useWalletStore(useShallow((state)=>({
+    contractAddress:state.contractAddress,
+    chainId:state.selectedChain
+  })))
   const [isBuying, setIsBuying] = useState(false);
   const [isVisible, setIsVisible] = useState(true);
   const [containerHeight, setContainerHeight] = useState("auto");
@@ -121,20 +122,21 @@ export function MarketBuyInterface({
       const gasResult = await estimateGas(config, {
         chainId: etherlink.id,
         value: parseEther(amount.toString()),
-        to: CONTRACT_ADDRESS_ETHERLINK,
+        to: contractAddress as `0x${string}`,
         data: data,
       });
       setEnableQuery(true);
       writeContract({
         abi: abi,
         functionName: "buyShares",
-        address: CONTRACT_ADDRESS_ETHERLINK,
+        address: contractAddress as `0x${string}`,
         args: [BigInt(marketId), selectedOption === "A"],
         value: parseEther(amount.toString()),
         gas: gasResult
           ? (((gasResult * BigInt(DEFAULT_GAS_PERCENTAGE)) /
               BigInt(100)) as bigint)
           : undefined,
+        chainId:chainId
       });
       setEnableQuery(false);
     } catch (error) {
@@ -312,7 +314,7 @@ export function MarketBuyInterface({
                           </button>
                         ) : (
                           <ConnectButton.Custom>
-                            {({ openConnectModal, openChainModal }) => (
+                            {({ openConnectModal, connectModalOpen }) => (
                               <button
                                 onClick={openConnectModal}
                                 className="bg-blue-900 text-blue-100 rounded-full px-4 py-2 font-semibold hover:bg-blue-600"

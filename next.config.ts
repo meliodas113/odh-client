@@ -1,6 +1,7 @@
 import type { NextConfig } from "next";
 const nextConfig: NextConfig = {
   images: {
+    dangerouslyAllowSVG:true,
     remotePatterns: [
       {
         protocol: "https",
@@ -10,10 +11,10 @@ const nextConfig: NextConfig = {
         protocol: "https",
         hostname: "media-hosting.imagekit.io"
       },
-      // {
-      //   protocol: "https",
-      //   hostname: "s2.coinmarketcap.com"
-      // },
+      {
+        protocol: "https",
+        hostname: "ik.imagekit.io"
+      },
       // {
       //   protocol: "https",
       //   hostname: "media-hosting.imagekit.io"

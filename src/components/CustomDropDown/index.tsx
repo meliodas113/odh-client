@@ -1,3 +1,4 @@
+import Image from 'next/image';
 import { useState, useRef, useEffect } from 'react';
 import { etherlink, moonbeam, Chain } from "viem/chains";
 
@@ -25,7 +26,7 @@ export function CustomChainDropdown({ selectedChain, onChange }:Props) {
     return () => document.removeEventListener('mousedown', handleClick);
   }, []);
 
-  function handleKeyDown(e:any) {
+  function handleKeyDown(e:React.KeyboardEvent) {
     if (e.key === 'Enter' || e.key === ' ') setOpen((o) => !o);
     if (e.key === 'Escape') setOpen(false);
   }
@@ -33,15 +34,16 @@ export function CustomChainDropdown({ selectedChain, onChange }:Props) {
   const selected = CHAINS.find((c) => c.id === selectedChain);
 
   return (
-    <div className="relative" ref={dropdownRef}>
+    <div className="relative w-[45%]" ref={dropdownRef}>
       <button
-        className={`flex items-center gap-2 px-4 py-2 rounded-lg border border-[#283046] bg-[#23263b] text-[#f9fafb] font-medium shadow transition hover:border-[#60a5fa] focus:outline-none`}
+        className={`flex w-full items-center gap-2 px-4 py-2 rounded-lg border border-[#283046] bg-[#23263b] text-[#f9fafb] font-medium shadow transition hover:border-[#60a5fa] focus:outline-none`}
         aria-haspopup="listbox"
         aria-expanded={open}
         onClick={() => setOpen((o) => !o)}
         onKeyDown={handleKeyDown}
         tabIndex={0}
       >
+        <Image src={`/assets/logos/${selected?.name.toLowerCase()}.svg`} alt="" height={22} width={22} className='radius-12'/>
         <span className="bg-gradient-to-r from-[#60a5fa] to-[#f9fafb] bg-clip-text text-transparent font-bold">
           {selected?.name}
         </span>
@@ -74,8 +76,10 @@ export function CustomChainDropdown({ selectedChain, onChange }:Props) {
                 }
               }}
             >
-              {chain.name}
-            </li>
+              <div className='flex flex-row gap-2 text-[#D9D9D9]'>
+              <Image src={`/assets/logos/${chain.name.toLowerCase()}.svg`} alt="" height={22} width={22} className='radius-12'/>{chain.name}
+                </div>
+            </li> 
           ))}
         </ul>
       )}
