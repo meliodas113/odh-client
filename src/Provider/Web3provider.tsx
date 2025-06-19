@@ -1,6 +1,6 @@
 "use client";
 import { createConfig, WagmiProvider } from "wagmi";
-import { etherlink } from "wagmi/chains";
+import { etherlink, moonbeam } from "wagmi/chains";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import {
   rabbyWallet,
@@ -16,6 +16,8 @@ import {
 import { http } from "wagmi";
 import { ReactNode } from "react";
 import { darkTheme } from "@rainbow-me/rainbowkit";
+import { useWalletStore } from "@/store/WalletStore";
+import { useShallow } from "zustand/react/shallow";
 
 
 
@@ -34,16 +36,22 @@ const connectors= connectorsForWallets(
 );
 
 export const config = createConfig({
-   chains: [etherlink],
+   chains: [etherlink, moonbeam],
    connectors,
    transports:{
-    [etherlink.id]:http()
+    [etherlink.id]:http(),
+    [moonbeam.id]:http()
    }
 });
 
 const queryClient = new QueryClient();
 
 export const Web3Provider = ({ children }: { children: ReactNode }) => {
+  const {
+    selectedChain
+  }=useWalletStore(useShallow((state)=>({
+    selectedChain:state.selectedChain
+  })))
   return (
     <WagmiProvider config={config}>
       <QueryClientProvider client={queryClient}>
@@ -56,7 +64,7 @@ export const Web3Provider = ({ children }: { children: ReactNode }) => {
             fontStack: 'system',
             overlayBlur: 'small',
           })}
-          initialChain={etherlink}
+          initialChain={selectedChain===etherlink.id ? etherlink : moonbeam}
         >
           {children}
         </RainbowKitProvider>

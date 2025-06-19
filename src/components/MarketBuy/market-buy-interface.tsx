@@ -4,9 +4,8 @@ import { useToast } from "@/components/ui/use-toast";
 import { useWriteContract, useEstimateGas } from "wagmi";
 import { Loader2 } from "lucide-react";
 import { abi } from "../ABI/abi";
-import { CONTRACT_ADDRESS } from "@/lib/contract";
 import { DEFAULT_GAS_PERCENTAGE } from "@/lib/contract";
-import { parseEther } from "viem";
+import { parseEther, parseUnits } from "viem";
 import Modal from "@mui/material/Modal";
 import { Grow } from "@mui/material";
 import { useAccount } from "wagmi";
@@ -16,6 +15,10 @@ import { config } from "@/Provider/Web3provider";
 import { encodeFunctionData } from "viem";
 import { etherlink } from "viem/chains";
 import Image from "next/image";
+import { useWalletStore } from "@/store/WalletStore";
+import { useShallow } from "zustand/react/shallow";
+import { write } from "fs";
+import { USDC_ABI } from "../ABI/usdc_abi";
 
 interface MarketBuyInterfaceProps {
   question: string;
@@ -40,7 +43,15 @@ export function MarketBuyInterface({
   const [enableQuery, setEnableQuery] = useState<boolean>(false);
   const { toast } = useToast();
   const { address } = useAccount();
-
+  const {
+    contractAddress,
+    chainId,
+    usdcAddress
+  }=useWalletStore(useShallow((state)=>({
+    contractAddress:state.contractAddress,
+    chainId:state.selectedChain,
+    usdcAddress:state.usdcAddress
+  })))
   const [isBuying, setIsBuying] = useState(false);
   const [isVisible, setIsVisible] = useState(true);
   const [containerHeight, setContainerHeight] = useState("auto");
@@ -115,20 +126,33 @@ export function MarketBuyInterface({
       const gasResult = await estimateGas(config, {
         chainId: etherlink.id,
         value: parseEther(amount.toString()),
-        to: CONTRACT_ADDRESS,
+        to: contractAddress as `0x${string}`,
         data: data,
       });
       setEnableQuery(true);
       writeContract({
+        abi:USDC_ABI,
+        address:usdcAddress as `0x${string}`,
+        functionName:'approve',
+        args: [
+          contractAddress,
+          parseUnits(amount, 6)
+        ]
+      })
+      writeContract({
         abi: abi,
         functionName: "buyShares",
-        address: CONTRACT_ADDRESS,
-        args: [BigInt(marketId), selectedOption === "A"],
-        value: parseEther(amount.toString()),
+        address: contractAddress as `0x${string}`,
+        args: [
+          BigInt(marketId), 
+          selectedOption === "A",
+          parseUnits(amount, 6)
+        ],
         gas: gasResult
           ? (((gasResult * BigInt(DEFAULT_GAS_PERCENTAGE)) /
               BigInt(100)) as bigint)
           : undefined,
+        chainId:chainId
       });
       setEnableQuery(false);
     } catch (error) {
@@ -187,7 +211,7 @@ export function MarketBuyInterface({
                             ? market.optionA
                             : market.optionB}{" "}
                         </span>
-                        share(s).
+                        worth of share(s).
                       </p>
                       <div className="flex justify-center gap-4">
                         <button
@@ -230,7 +254,7 @@ export function MarketBuyInterface({
                             id="amount-input"
                             type="text"
                             inputMode="decimal" 
-                            placeholder="Enter amount in XTZ"
+                            placeholder="Enter amount in USD"
                             value={amount}
                             onChange={(e) => {
                               const inputValue = e.target.value;
@@ -306,7 +330,7 @@ export function MarketBuyInterface({
                           </button>
                         ) : (
                           <ConnectButton.Custom>
-                            {({ openConnectModal }) => (
+                            {({ openConnectModal, connectModalOpen }) => (
                               <button
                                 onClick={openConnectModal}
                                 className="bg-blue-900 text-blue-100 rounded-full px-4 py-2 font-semibold hover:bg-blue-600"

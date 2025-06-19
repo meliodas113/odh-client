@@ -5,10 +5,11 @@ import { useAccount } from "wagmi";
 import { useState } from "react";
 import { useWriteContract } from "wagmi";
 import { abi } from "./ABI/abi";
-import { CONTRACT_ADDRESS } from "@/lib/contract";
 import { useToast } from "./ui/use-toast";
 import { useEffect } from "react";
 import { useReadContract } from "wagmi";
+import { useWalletStore } from "@/store/WalletStore";
+import { useShallow } from "zustand/react/shallow";
 
 interface MarketResolvedProps {
   marketId: number;
@@ -26,13 +27,20 @@ export function MarketResolved({
   const { toast } = useToast();
   const { address } = useAccount();
   const { writeContract, data, error: contractError } = useWriteContract();
-
   const [enableQuery, setEnableQuery] = useState(false);
+  const {
+    contractAddress,
+    chainId
+  }=useWalletStore(useShallow((state)=>({
+    contractAddress:state.contractAddress,
+    chainId:state.selectedChain
+  })))
   const { data: claimCheck } = useReadContract({
     abi,
-    address: CONTRACT_ADDRESS,
+    address: contractAddress as `0x${string}`,
     functionName: "checkHasClaimed",
     args: [address, BigInt(marketId)],
+    chainId:chainId
   });
   const checkClaimRewards: boolean = claimCheck as boolean;
 
@@ -75,8 +83,9 @@ export function MarketResolved({
       writeContract({
         abi: abi,
         functionName: "claimWinnings",
-        address: CONTRACT_ADDRESS as `0x${string}`,
+        address: contractAddress as `0x${string}`,
         args: [BigInt(marketId)],
+        chainId:chainId
       });
       setEnableQuery(false);
     } catch (error) {
