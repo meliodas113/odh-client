@@ -96,9 +96,6 @@ export function MarketCard({ index, filter, category }: MarketCardProps) {
         resolved: finalData[9],
       }
     : undefined;
-
-  console.log("The market id is",market?.question,Number(market?.endTime),index )
-
   const { data: sharesBalanceData } = useReadContract({
     abi,
     address: contractAddress as `0x${string}`,
