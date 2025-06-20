@@ -96,7 +96,6 @@ export function MarketBuyInterface({
   }, [isBuying, buyingStep, isVisible, error]);
 
   useEffect(()=>{
-    console.log("The amount is", amount, userBalance);
     if(!userBalance && !isLoadingUserBalance ) return;
 
    if (Number(amount) < userBalance) {

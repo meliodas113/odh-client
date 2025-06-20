@@ -1,10 +1,12 @@
 import { useState, useEffect } from "react";
-
+import { FetchSharesFunction } from "@/lib/contract";
+import Image from "next/image";
 interface MarketProgressProps {
   optionA: string;
   optionB: string;
   totalOptionAShares: bigint;
   totalOptionBShares: bigint;
+  marketId:number;
 }
 
 export function MarketProgress({
@@ -12,12 +14,13 @@ export function MarketProgress({
   optionB,
   totalOptionAShares,
   totalOptionBShares,
+  marketId
 }: MarketProgressProps) {
   const [animationComplete, setAnimationComplete] = useState(false);
   const [hoveredOption, setHoveredOption] = useState<null | "A" | "B">(null);
-
-  const aShares = Number(totalOptionAShares);
-  const bShares = Number(totalOptionBShares);
+  const totalMarketShares=FetchSharesFunction(marketId)
+  const aShares = Number(totalOptionAShares)+ Number(totalMarketShares.optionAShares);
+  const bShares = Number(totalOptionBShares)+ Number(totalMarketShares.optionBShares);
   const total = aShares + bShares;
 
   const percentA = total > 0 ? (aShares / total) * 100 : 50;
@@ -32,7 +35,6 @@ export function MarketProgress({
 
   return (
     <div className="w-full mb-2.5">
-      {/* Option buttons */}
       <div className="flex flex-col sm:flex-row sm:justify-between gap-2.5 mb-2.5">
         {[
           { id: "A", name: optionA, percent: percentA },
@@ -97,14 +99,16 @@ export function MarketProgress({
       <div className="flex flex-row justify-between text-sm text-white/70 gap-2">
         <div className="flex items-center">
           <span className="mr-2">{optionA} Shares:</span>
-          <span className="font-semibold text-white">
-            {(aShares / 1e18).toLocaleString()}
+          <span className="font-semibold text-white flex flex-row gap-1">
+            {(aShares / 1e6).toLocaleString()}
+            <Image src={"/assets/logos/usdc.svg"} height={18} width={18} alt=""/>
           </span>
         </div>
         <div className="flex items-center">
           <span className="mr-2">{optionB} Shares:</span>
-          <span className="font-semibold text-white">
-            {(bShares / 1e18).toLocaleString()}
+          <span className="font-semibold text-white flex flex-row gap-1">
+            {(bShares / 1e6).toLocaleString()}
+            <Image src={"/assets/logos/usdc.svg"} height={18} width={18} alt=""/>
           </span>
         </div>
       </div>

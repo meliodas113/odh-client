@@ -30,7 +30,6 @@ export const useFetchBalance=()=>{
     }
   },
 );
-  console.log("The user balance is", data)
   const userBalance=Number(data)/10**6;
   return {
     userBalance,

@@ -1,3 +1,5 @@
+import { SharesBalance } from "@/components/marketCard";
+
 /* eslint-disable @typescript-eslint/no-explicit-any */
 export const CONTRACT_ADDRESS_ETHERLINK = "0x4eA0A867d0A0806be2e2c370f8e0B0472efC0b84";
 export const CONTRACT_ADDRESS_MOONBEAM = "0x040838b1b1186B4b7555F241012AF0FFa7dc9dCB";
@@ -44,3 +46,28 @@ export const colorStyles = {
     color: "#FFF",
   }),
 };
+
+
+export const FetchSharesFunction=(marketId:number):SharesBalance=>{
+  if(marketId===15){
+    return {
+      optionAShares: BigInt(100000000),  //total 350 usdc
+      optionBShares: BigInt(250000000),
+    }
+  }else if(marketId===16){
+    return {
+      optionAShares: BigInt(220000000), 
+      optionBShares: BigInt(192340000)  //total 412.34
+    }
+  }else if(marketId===9){
+    return {
+      optionAShares: BigInt(282000200),
+      optionBShares: BigInt(250000000)
+    }
+  }else{
+    return {
+      optionAShares: BigInt(0),
+      optionBShares: BigInt(0)
+    }
+  }
+}

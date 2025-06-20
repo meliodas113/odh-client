@@ -82,6 +82,7 @@ export function MarketCard({ index, filter, category }: MarketCardProps) {
     boolean
   ];
 
+ 
   const market: Market | undefined = marketData
     ? {
         question: finalData[0],
@@ -107,7 +108,9 @@ export function MarketCard({ index, filter, category }: MarketCardProps) {
   if (market?.question.toLowerCase() === "none") {
     return null;
   }
+
   const sharesData: [bigint, bigint] = sharesBalanceData as [bigint, bigint];
+
   const sharesBalance: SharesBalance | undefined = sharesBalanceData
     ? {
         optionAShares: sharesData[0],
@@ -131,7 +134,6 @@ export function MarketCard({ index, filter, category }: MarketCardProps) {
     }
   };
 
-  // If the market should not be shown, return null
   if (
     !shouldShow() ||
     (category.toLowerCase() !== market?.category.toLowerCase() &&
@@ -171,6 +173,7 @@ export function MarketCard({ index, filter, category }: MarketCardProps) {
                 optionB={market.optionB}
                 totalOptionAShares={market.totalOptionAShares}
                 totalOptionBShares={market.totalOptionBShares}
+                marketId={index}
               />
             )}
             {new Date(Number(market?.endTime) * 1000) < new Date() ? (
