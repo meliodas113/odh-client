@@ -271,14 +271,14 @@ export function MarketBuyInterface({
                           htmlFor="amount-input"
                           className="text-sm font-semibold text-blue-200"
                         >
-                          Enter amount to buy:
+                          Enter amount to buy: 
                         </label>
                         <div className="flex items-center gap-3">
                           <input
                             id="amount-input"
                             type="text"
                             inputMode="decimal" 
-                            placeholder="Enter amount in USD"
+                            placeholder={`Enter amount in USDC`}
                             value={amount}
                             onChange={(e) => {
                               const inputValue = e.target.value;
