@@ -12,7 +12,7 @@ interface Props{
    selectedChain:number;
 }
 
-export function CustomChainDropdown({ selectedChain }:Props) {
+export function CustomChainDropdown({ selectedChain, onChange }:Props) {
   const [open, setOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
 
@@ -47,11 +47,11 @@ export function CustomChainDropdown({ selectedChain }:Props) {
         <span className="bg-gradient-to-r from-[#60a5fa] to-[#f9fafb] bg-clip-text text-transparent font-bold">
           {selected?.name}
         </span>
-        {/* {<svg className={`w-4 h-4 transition-transform ${open ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        {<svg className={`w-4 h-4 transition-transform ${open ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-        </svg>} */}
+        </svg>}
       </button>
-      {/* {open && (
+      {open && (
         <ul
           className="absolute left-0 mt-2 w-full bg-[#23263b] border border-[#283046] rounded-lg shadow-lg z-50"
           role="listbox"
@@ -82,7 +82,7 @@ export function CustomChainDropdown({ selectedChain }:Props) {
             </li> 
           ))}
         </ul>
-      )} */}
+      )}
     </div>
   );
 }
