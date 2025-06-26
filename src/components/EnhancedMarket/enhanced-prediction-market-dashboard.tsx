@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 "use client";
 import { useEffect, useState } from "react";
 import { useReadContract } from "wagmi";
@@ -11,8 +12,10 @@ import { Footer } from "../footer";
 import { categoryTabs } from "@/lib/config";
 import { useWalletStore } from "@/store/WalletStore";
 import { useShallow } from "zustand/react/shallow";
-
+import { useRouter, usePathname } from "next/navigation";
+import { useMediaQuery } from "@mui/material";
 export function EnhancedPredictionMarketDashboard() {
+  const mobileDevice = useMediaQuery("(max-width: 600px)");
   const [selectedCategory, setSelectedCategory] = useState("trending");
   const {
     selectedChain,
@@ -21,6 +24,8 @@ export function EnhancedPredictionMarketDashboard() {
     selectedChain:state.selectedChain,
     contractAddress:state.contractAddress
   })))
+  const router = useRouter();
+  const pathname = usePathname();
 
   useEffect(()=>{
     if(!contractAddress || !selectedChain) return
@@ -42,6 +47,24 @@ export function EnhancedPredictionMarketDashboard() {
       <div className="flex-grow container mx-auto p-4">
         <Navbar />
         <div>
+        { mobileDevice && <div className="flex flex-row justify-center gap-[50px] w-full p-5">
+            <span
+              className={`text-lg cursor-pointer ${
+                !pathname.includes("UserBets") ? "text-white" : "text-slate-400"
+              }`}
+              onClick={() => router.push("/")}
+            >
+              Home
+            </span>
+            <span
+              className={`text-lg cursor-pointer ${
+                pathname.includes("UserBets") ? "text-white" : "text-slate-400"
+              }`}
+              onClick={() => router.push("/UserBets")}
+            >
+              My Bets
+            </span>
+        </div>}
           <OddsHubCentral />
         </div>
         <div className="flex flex-row justify-start px-[18px] py-[12px] rounded-[12px] gap-2 mb-4 flex-wrap">

@@ -16,7 +16,7 @@ import Image from "next/image";
 import { abi } from "./ABI/abi";
 import { useWalletStore } from "@/store/WalletStore";
 import { useShallow } from "zustand/react/shallow";
-
+import { Market } from "@/types/types";
 export interface MarketCardProps {
   index: number;
   filter: "active" | "pending" | "resolved";
@@ -24,18 +24,7 @@ export interface MarketCardProps {
 }
 
 // Interface for the market data
-export interface Market {
-  question: string;
-  imageURI: string;
-  optionA: string;
-  optionB: string;
-  endTime: bigint;
-  outcome: number;
-  totalOptionAShares: bigint;
-  totalOptionBShares: bigint;
-  resolved: boolean;
-  category: string;
-}
+
 
 // Interface for the shares balance
 export interface SharesBalance {

@@ -1,10 +1,22 @@
 export interface Market {
     question: string;
+    imageURI: string;
     optionA: string;
     optionB: string;
-    endTime: string;
-    outcome: string;
-    totalOptionAShares: number;
-    totalOptionBShares: number;
+    endTime: bigint;
+    outcome: number;
+    totalOptionAShares: bigint;
+    totalOptionBShares: bigint;
     resolved: boolean;
-}
+    category: string;
+  }
+
+
+  export interface UserPosition{
+    marketName:string;
+    outcome:string;
+    endTime:number;
+    shares:number;
+    isOpen:boolean;
+    outcomeIndex:number;
+  }

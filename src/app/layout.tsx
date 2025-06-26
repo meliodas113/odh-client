@@ -4,6 +4,15 @@ import { Toaster } from "@/components/ui/toaster";
 import NextTopLoader from "nextjs-toploader";
 import { Web3Provider } from "@/Provider/Web3provider";
 
+import { Alata } from "next/font/google";
+
+const alata = Alata({
+  weight: "400",
+  subsets: ["latin"],
+  display: "swap",
+});
+
+
 export const metadata: Metadata = {
   title: "OddsHub",
   description: "Your gateway to the future of prediction markets",
@@ -22,9 +31,9 @@ export default function RootLayout({
           name="OddsHub | Your gateway to the future of prediction markets"
           content="Your gateway to the future of prediction markets"
         />
-        <link rel="icon" href="/assets/logos/oddshublogo.png" />
+        <link rel="icon" href="/assets/logos/oddshub.svg" />
       </head>
-      <body>
+      <body className={alata.className}>
         <NextTopLoader showSpinner={false} color="#2043cf" />
         <Web3Provider>
           <main
