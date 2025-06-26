@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { ConnectButton } from '@rainbow-me/rainbowkit';
 import { Chain} from "viem/chains";
 import { useAccount, useSwitchChain } from "wagmi";
@@ -6,6 +7,7 @@ import { CONTRACT_ADDRESS_ETHERLINK, CONTRACT_ADDRESS_MOONBEAM, USDC_ETHERLINK, 
 import { useShallow } from "zustand/react/shallow";
 import { CustomChainDropdown } from '../CustomDropDown';
 import { useEffect } from 'react';
+import { usePathname, useRouter } from 'next/navigation';
 import { useMediaQuery } from '@mui/material';
 export function Navbar() {
   const { switchChain } = useSwitchChain();
@@ -15,7 +17,8 @@ export function Navbar() {
   }=useWalletStore(useShallow((state)=>({
     selectedChain:state.selectedChain
   })))
-
+  const router = useRouter();
+  const pathname = usePathname();
   const mobileDevice = useMediaQuery("(max-width: 600px)");
   useEffect(()=>{
     if(chain && useWalletStore.getState().selectedChain !== chain?.id){
@@ -38,27 +41,53 @@ export function Navbar() {
   };
 
   return (
-    <nav className="w-full z-[100] mb-5 border-b border-[#1f2937] bg-[#161b2e] rounded-lg animate-navbarDropDown">
-    <div className="max-w-[1480px] mx-auto h-16 px-4 sm:px-6 flex items-center justify-between">
-      <div className="text-[1.75rem] font-bold tracking-tight font-inter bg-gradient-to-r from-[#60a5fa] to-[#f9fafb] bg-clip-text text-transparent">
-        <span className="text-[#60a5fa] font-extrabold">O</span>
-        <span className="text-[#f9fafb]">ddsHub</span>
+    // <nav className="w-full z-[100] mb-5 border-b border-[#1f2937] bg-[#161b2e] rounded-lg animate-navbarDropDown">
+     <div className="mb-5 border-b border-[#1f2937] bg-[#161b2e] rounded-lg animate-navbarDropDown px-3 md:px-6 py-4">
+        <div className="flex items-center justify-between w-full md:5px-[30px]">
+          <div className="flex items-center space-x-2">
+            <div className="w-6 h-6 bg-blue-500 rounded-full flex items-center justify-center">
+              <div className="w-3 h-3 bg-white rounded-full"></div>
+            </div>
+            <span className="text-lg font-semibold text-white ">OddsHub</span>
+          </div>
+         { !mobileDevice && <div className="flex flex-row gap-[40px]">
+            <span
+              className={`text-lg cursor-pointer ${
+                !pathname.includes("UserBets") ? "text-white" : "text-slate-400"
+              }`}
+              onClick={() => router.push("/")}
+            >
+              Home
+            </span>
+            <span
+              className={`text-lg cursor-pointer ${
+                pathname.includes("UserBets") ? "text-white" : "text-slate-400"
+              }`}
+              onClick={() => router.push("/UserBets")}
+            >
+              My Bets
+            </span>
+          </div>}
+          <div className="flex items-center space-x-4 w-[40%] justify-end">
+            <div className="flex flex-row justify-end items-center gap-4 w-full">
+              <CustomChainDropdown
+                selectedChain={selectedChain}
+                onChange={handleSwitchNetwork}
+              />
+              <ConnectButton
+                label="Connect Wallet"
+                showBalance={false}
+                chainStatus={"none"}
+                accountStatus={{
+                  smallScreen: "avatar",
+                  largeScreen: "full",
+                }}
+              />
+            </div>
+          </div>
+        </div>
       </div>
-
-      <div className="flex flex-row justify-end items-center gap-4 w-[70%] sm:w-[50%] lg:w-[35%]">
-        {!mobileDevice && <CustomChainDropdown
-          selectedChain={selectedChain}
-          onChange={handleSwitchNetwork}
-        />}
-        <ConnectButton label='Connect Wallet' showBalance={false} chainStatus={"none"} 
-          accountStatus={{
-            smallScreen:'full',
-            largeScreen: 'full',
-          }}
-        />
-      </div>
-    </div>
-  </nav>
+  // </nav>
 
   );
 }

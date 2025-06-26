@@ -34,9 +34,9 @@ export function CustomChainDropdown({ selectedChain, onChange }:Props) {
   const selected = CHAINS.find((c) => c.id === selectedChain);
 
   return (
-    <div className="relative w-[45%] lg:w-[40%] xl:w-[35%]" ref={dropdownRef}>
+    <div className="relative md:w-[45%] lg:w-[40%] xl:w-[35%]" ref={dropdownRef}>
       <button
-        className={`flex w-full items-center gap-2 px-4 py-2 rounded-lg border border-[#283046] bg-[#23263b] text-[#f9fafb] font-medium shadow transition hover:border-[#60a5fa] focus:outline-none`}
+        className={`flex md:w-full items-center gap-[5px] md:gap-1 px-4 py-2 rounded-lg border border-[#283046] bg-[#23263b] text-[#f9fafb] font-medium shadow transition hover:border-[#60a5fa] focus:outline-none`}
         aria-haspopup="listbox"
         aria-expanded={open}
         onClick={() => setOpen((o) => !o)}
