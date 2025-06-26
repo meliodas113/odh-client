@@ -137,35 +137,6 @@ export const PositionRow = ({ index, gridDisplay, open }: Props) => {
     });
   }
 
-  if (market === undefined || market.question === "none") return null;
-
-  if (market?.question.toLowerCase() === "none") {
-    return null;
-  }
-
-  const finalPositions = [...affirmativePredictions, ...negativePredictions];
-
-  if (finalPositions.length === 0) return null;
-
-  const renderCloseMarketButton = (userPosition: UserPosition) => {
-    if (market.outcome === userPosition.outcomeIndex) {
-      if (userPosition.shares > 0 && !claimCheck) {
-        return (
-          <div>
-            <button className="px-4 py-2 rounded-lg bg-[#1c9ee9] text-white text-[15px] font-alata" onClick={handleClaimRewards}>
-              Claim
-            </button>
-          </div>
-        );
-      } else {
-        return (
-          <span className="text-white font-alata text-[15px]">Claimed</span>
-        );
-      }
-    }
-    return <span className="text-white font-alata text-[15px]">Lost</span>;
-  };
-
 
   useEffect(() => {
     if (data) {
@@ -199,6 +170,37 @@ export const PositionRow = ({ index, gridDisplay, open }: Props) => {
       });
     }
   }, [contractError]);
+  if (market === undefined || market.question === "none") return null;
+
+  if (market?.question.toLowerCase() === "none") {
+    return null;
+  }
+
+  const finalPositions = [...affirmativePredictions, ...negativePredictions];
+
+  if (finalPositions.length === 0) return null;
+
+  const renderCloseMarketButton = (userPosition: UserPosition) => {
+    if (market.outcome === userPosition.outcomeIndex) {
+      if (userPosition.shares > 0 && !claimCheck) {
+        return (
+          <div>
+            <button className="px-4 py-2 rounded-lg bg-[#1c9ee9] text-white text-[15px] font-alata" onClick={handleClaimRewards}>
+              Claim
+            </button>
+          </div>
+        );
+      } else {
+        return (
+          <span className="text-white font-alata text-[15px]">Claimed</span>
+        );
+      }
+    }
+    return <span className="text-white font-alata text-[15px]">Lost</span>;
+  };
+
+
+  
 
   const handleClaimRewards = async () => {
     try {
