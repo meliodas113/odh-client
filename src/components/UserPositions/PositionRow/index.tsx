@@ -11,6 +11,8 @@ import { useMediaQuery } from "@mui/material";
 import { IoMdArrowDropdown } from "react-icons/io";
 import { useState } from "react";
 import { useEffect } from "react";
+import { useWriteContract } from "wagmi";
+import { useToast } from "@/components/ui/use-toast";
 
 interface Props {
   index: number;
@@ -20,6 +22,9 @@ interface Props {
 
 export const PositionRow = ({ index, gridDisplay, open }: Props) => {
   const account = useAccount();
+  const {
+    toast
+  }=useToast();
   const [openDropwDown, setOpenDropDown] = useState<boolean>(false);
   const mobileDevice = useMediaQuery("(max-width: 600px)");
   const { chainId, contractAddress } = useWalletStore(
@@ -96,6 +101,8 @@ export const PositionRow = ({ index, gridDisplay, open }: Props) => {
     chainId: chainId,
   });
 
+  const { writeContract, data, error: contractError } = useWriteContract();
+  const [enableQuery, setEnableQuery] = useState(false);
   const sharesData: [bigint, bigint] = sharesBalanceData as [bigint, bigint];
 
   const sharesBalance: SharesBalance | undefined = sharesBalanceData
@@ -145,7 +152,7 @@ export const PositionRow = ({ index, gridDisplay, open }: Props) => {
       if (userPosition.shares > 0 && !claimCheck) {
         return (
           <div>
-            <button className="px-4 py-2 rounded-lg bg-[#1c9ee9] text-white text-[15px] font-alata">
+            <button className="px-4 py-2 rounded-lg bg-[#1c9ee9] text-white text-[15px] font-alata" onClick={handleClaimRewards}>
               Claim
             </button>
           </div>
@@ -157,6 +164,56 @@ export const PositionRow = ({ index, gridDisplay, open }: Props) => {
       }
     }
     return <span className="text-white font-alata text-[15px]">Lost</span>;
+  };
+
+
+  useEffect(() => {
+    if (data) {
+      const formattedHash = `${data.slice(0, 15)}...${data.slice(-4)}`;
+      toast({
+        title: "Purchase Successful!",
+        description: `You have successfully claimed your Winnings \n
+      The hash of the transaction is ${formattedHash}
+       `,
+        duration: 5000,
+        style: {
+          backgroundColor: "#0F172A",
+          color: "#A3BFFA",
+          fontSize: "12px",
+        },
+      });
+    }
+  }, [data]);
+
+  useEffect(() => {
+    if (contractError) {
+      toast({
+        title: "Error",
+        description: "Transaction failed. Please try again.",
+        duration: 5000,
+        style: {
+          backgroundColor: "#0F172A",
+          color: "#A3BFFA",
+          fontSize: "12px",
+        },
+      });
+    }
+  }, [contractError]);
+
+  const handleClaimRewards = async () => {
+    try {
+      setEnableQuery(true);
+      writeContract({
+        abi: abi,
+        functionName: "claimWinnings",
+        address: contractAddress as `0x${string}`,
+        args: [BigInt(index)],
+        chainId:chainId
+      });
+      setEnableQuery(false);
+    } catch (error) {
+      setEnableQuery(false);
+    }
   };
 
   return (
